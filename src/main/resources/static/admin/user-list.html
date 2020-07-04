@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://zhishiku.little-star.me/?/admin/user/list/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="blank">
+<meta name="format-detection" content="telephone=no">
+<title>会员列表</title>
+<!--<base href="http://zhishiku.little-star.me/?/">--><base href=".">
+<link type="text/css" rel="stylesheet" href="./user-list_files/bootstrap.css">
+<link type="text/css" rel="stylesheet" href="./user-list_files/icon.css">
+<script type="text/javascript">
+    var G_INDEX_SCRIPT = "?/";
+    var G_BASE_URL = "http://zhishiku.little-star.me/?";
+    var G_STATIC_URL = "http://zhishiku.little-star.me/static";
+    var G_UPLOAD_URL = "http://zhishiku.little-star.me/uploads";
+    var G_USER_ID = "1";
+    var G_POST_HASH = "";
+</script>
+<link type="text/css" rel="stylesheet" href="./user-list_files/common.css">
+<script type="text/javascript" src="./user-list_files/jquery.2.js.下载"></script>
+<script type="text/javascript" src="./user-list_files/aws_admin.js.下载"></script>
+<script type="text/javascript" src="./user-list_files/aws_admin_template.js.下载"></script>
+<script type="text/javascript" src="./user-list_files/jquery.form.js.下载"></script>
+<script type="text/javascript" src="./user-list_files/framework.js.下载"></script>
+<script type="text/javascript" src="./user-list_files/global.js.下载"></script>
+<!--[if lte IE 8]>
+    <script type="text/javascript" src="http://zhishiku.little-star.me/static/js/respond.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="./user-list_files/layer.css" id="layuicss-layer"></head>
+
+<body>
+<div class="aw-header">
+    <button class="btn btn-sm mod-head-btn pull-left">
+        <i class="icon icon-bar"></i>
+    </button>
+
+    <div class="mod-header-user">
+        <ul class="pull-right">
+                        <li class="dropdown">
+                <a href="http://zhishiku.little-star.me/?/#" class="dropdown-toggle mod-bell" data-toggle="dropdown">
+                    <i class="icon icon-bell"></i>
+                                        <span class="label label-danger">1</span>
+                                    </a>
+                <ul class="dropdown-menu mod-chat">
+                                    <div class="mod-list-head">
+                        您有 1 条消息                    </div>
+
+                                        <li class="mod-media">
+                        <a href="http://www.wecenter.com/downloads/">
+                            程序需要更新，最新版本为 3.5.0                        </a>
+                    </li>
+                                    </ul>
+            </li>
+
+            <li class="dropdown username">
+                <a href="http://zhishiku.little-star.me/?/" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="./user-list_files/01_avatar_mid.jpg" class="img-circle" width="30">
+                    tong                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu pull-right mod-user">
+                    <li>
+                        <a href="http://zhishiku.little-star.me/" target="_blank"><i class="icon icon-home"></i>首页</a>
+                    </li>
+
+                    <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/"><i class="icon icon-ul"></i>概述</a>
+                    </li>
+
+                    <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/logout/"><i class="icon icon-logout"></i>退出</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="aw-side ps-container" id="aw-side">
+    <div class="mod">
+        <div class="mod-logo">
+            <img class="pull-left" src="./user-list_files/logo.png" alt="">
+            <h1>东方锐智</h1>
+        </div>
+
+        <div class="mod-message">
+            <div class="message">
+                <a class="btn btn-sm" href="http://zhishiku.little-star.me/" target="_blank" title="首页">
+                    <i class="icon icon-home"></i>
+                </a>
+
+                <a class="btn btn-sm" href="http://zhishiku.little-star.me/?/admin/" title="概述">
+                    <i class="icon icon-ul"></i>
+                </a>
+
+                <a class="btn btn-sm" href="http://zhishiku.little-star.me/?/admin/logout/" title="退出">
+                    <i class="icon icon-logout"></i>
+                </a>
+            </div>
+        </div>
+
+        <ul class="mod-bar">
+            <input type="hidden" id="hide_values" val="0">
+                                    <li>
+                <a href="http://zhishiku.little-star.me/?/admin/" class=" icon icon-home">
+                    <span>概述</span>
+                </a>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-setting" data="icon">
+                    <span>全局设置</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-site">
+                            <span>站点信息</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-register">
+                            <span>注册访问</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-functions">
+                            <span>站点设置</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-contents">
+                            <span>功能设置</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-integral">
+                            <span>威望积分</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-permissions">
+                            <span>用户权限</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-mail">
+                            <span>邮件设置</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-openid">
+                            <span>开放平台</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-cache">
+                            <span>性能优化</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/settings/category-interface">
+                            <span>界面设置</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-reply" data="icon">
+                    <span>内容管理</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/question/question_list/">
+                            <span>问题管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/article/list/">
+                            <span>文章管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/topic/list/">
+                            <span>话题管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/comment/answer_list/">
+                            <span>回复管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/comment/question_comment_list/">
+                            <span>问题评论管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/comment/answer_comment_list/">
+                            <span>回复评论管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/article/comment/">
+                            <span>文章评论管理</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-user active" data="icon">
+                    <span>用户管理</span>
+                </a>
+                
+                <ul>
+                                                                <li>
+                        <a class="active" href="http://zhishiku.little-star.me/?/admin/user/list/">
+                            <span>用户列表</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/user/group_list/">
+                            <span>用户组</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/user/invites/">
+                            <span>批量邀请</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/user/job_list/">
+                            <span>职位设置</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-report" data="icon">
+                    <span>审核管理</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/approval/list/">
+                            <span>内容审核</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/user/verify_approval_list/">
+                            <span>认证审核</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/user/register_approval_list/">
+                            <span>注册审核</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/question/report_list/">
+                            <span>用户举报</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-reply" data="icon">
+                    <span>活动管理</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/project/project_list/">
+                            <span>活动管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/project/approval_list/">
+                            <span>活动审核</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/project/order_list/">
+                            <span>订单管理</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-signup" data="icon">
+                    <span>内容设置</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/nav_menu/">
+                            <span>导航设置</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/category/list/">
+                            <span>分类管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/feature/list/">
+                            <span>专题管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/page/">
+                            <span>页面管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/column/list/">
+                            <span>专栏管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/help/list/">
+                            <span>帮助中心</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/menus/">
+                            <span>后台菜单</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/nav/">
+                            <span>前台菜单</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-share" data="icon">
+                    <span>微信微博</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/accounts/">
+                            <span>微信多账号管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/mp_menu/">
+                            <span>微信菜单管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/reply/">
+                            <span>微信自定义回复</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/third_party_access/">
+                            <span>微信第三方接入</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/qr_code/">
+                            <span>微信二维码管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/sent_msgs_list/">
+                            <span>微信消息群发</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weibo/msg/">
+                            <span>微博消息接收</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/edm/receiving_list/">
+                            <span>邮件导入</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/weixin/template_msg/">
+                            <span>微信通知模板</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-inbox" data="icon">
+                    <span>邮件群发</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/edm/tasks/">
+                            <span>任务管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/edm/groups/">
+                            <span>用户群管理</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-job" data="icon">
+                    <span>工具</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/tools/">
+                            <span>系统维护</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-plugin" data="icon">
+                    <span>插件扩展</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/plugin/">
+                            <span>插件管理</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/tools/sms/">
+                            <span>短信功能</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/tools/pay/">
+                            <span>支付功能</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/hooks/">
+                            <span>钩子管理</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                                    <li>
+                <a href="javascript:;" class=" icon icon-good" data="icon">
+                    <span>交易管理</span>
+                </a>
+                
+                <ul class="collapse">
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/transaction/trading/">
+                            <span>交易流水</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/transaction/apply/">
+                            <span>提现申请</span>
+                        </a>
+                    </li>
+                                                                <li>
+                        <a href="http://zhishiku.little-star.me/?/admin/tools/notes/">
+                            <span>短信记录</span>
+                        </a>
+                    </li>
+                                    </ul>
+                            </li>
+                    </ul>
+    </div>
+<div class="ps-scrollbar-x-rail" style="width: 235px; display: none; left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 892px; display: inherit; right: 0px;"><div class="ps-scrollbar-y" style="top: 0px; height: 834px;"></div></div></div>
+<style>
+    .table-header-title{
+        float: left;line-height: 50px;
+    }
+    .table-header-icon {
+        float: left;
+    }
+    .table-header-icon-down{margin-top: -10px;}
+    .table-header-icon-down a{
+        display:inline-block;margin-top: -10px;
+    }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{padding: 4px ! important;;}
+</style>
+<div class="aw-content-wrap" id="user_list">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="http://zhishiku.little-star.me/?/#list" data-toggle="tab">用户列表</a></li>
+                    <li><a href="http://zhishiku.little-star.me/?/admin/user/list/type-forbidden">封禁用户</a></li>
+                    <li><a href="http://zhishiku.little-star.me/?/#search" data-toggle="tab">搜索</a></li>
+                    <li><a href="http://zhishiku.little-star.me/?/admin/user/user_add/">添加用户</a></li>
+                    <li><a href="http://zhishiku.little-star.me/?/#remove" data-toggle="tab">已删除</a></li>
+                </ul>
+            </h3>
+        </div>
+        <div class="mod-body tab-content">
+            <div class="tab-pane active" id="list">
+                
+                <div class="table-responsive">
+                                    <form method="post" action="http://zhishiku.little-star.me/?/admin/ajax/remove_users/" id="users_form">
+                        <div id="reason" style="display: none;padding: 25px;">
+                            <select id="sel" name="reason" class="form-control">
+                                <option value="">请选择原因</option>
+                                                                <option value="发布不良内容">发布不良内容</option>
+                                                            </select>
+                        </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" class="check-all" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></th>
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>邮箱</th>
+                                <th>会员组</th>
+                                <th>系统组</th>
+                                <th>
+                                    <div class="table-header-title">注册时间</div>
+                                    <div class="table-header-icon">
+                                        <div>
+                                            <a href="http://zhishiku.little-star.me/?/admin/user/list/reg_time-up" style="display:inline-block;margin-top: 10px;">
+                                                <i class="icon-up"></i>                                            </a>
+                                        </div>
+                                    
+                                                                            <div class="table-header-icon-down"><a href="http://zhishiku.little-star.me/?/admin/user/list/reg_time-down" style=""><i class="icon-down"></i></a></div>
+                                                                        </div>
+                                </th>
+                                <th>
+                                    <div class="table-header-title">最后活跃</div>
+                                    <div class="table-header-icon">
+                                        <div>
+                                            <a href="http://zhishiku.little-star.me/?/admin/user/list/last_active-up" style="display:inline-block;margin-top: 10px;">
+                                                <i class="icon-up"></i>                                            </a>
+                                        </div>
+                                    
+                                                                            <div class="table-header-icon-down"><a href="http://zhishiku.little-star.me/?/admin/user/list/last_active-down"><i class="icon-down"></i></a></div>
+                                                                        </div>
+                                </th>
+                                <th>
+                                    <div class="table-header-title">在线时长</div>
+                                    <div class="table-header-icon">
+                                        <div>
+                                            <a href="http://zhishiku.little-star.me/?/admin/user/list/online_time-up" style="display:inline-block;margin-top: 10px;">
+                                                <i class="icon-up"></i>                                            </a>
+                                        </div>
+                                    
+                                                                            <div class="table-header-icon-down"><a href="http://zhishiku.little-star.me/?/admin/user/list/online_time-down"><i class="icon-down"></i></a></div>
+                                                                        </div>
+                                </th>
+                                <th>
+                                    <div class="table-header-title">威望</div>
+                                    <div class="table-header-icon">
+                                        <div>
+                                            <a href="http://zhishiku.little-star.me/?/admin/user/list/reputation-up" style="display:inline-block;margin-top: 10px;">
+                                                <i class="icon-up"></i>                                            </a>
+                                        </div>
+                                    
+                                                                            <div class="table-header-icon-down"><a href="http://zhishiku.little-star.me/?/admin/user/list/reputation-down"><i class="icon-down"></i></a></div>
+                                                                        </div>
+                                </th>
+                                                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                        <tr>
+                                <td><div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" value="2" name="uids[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
+                                <td>2</td>
+                                <td><a href="http://zhishiku.little-star.me/?/people/2" target="_blank">童瞳</a> </td>
+                                <td>55672392@qq.com</td>
+                                <td>注册会员</td>
+                                <td>普通会员</td>
+                                <td>2020-04-02 11:18</td>
+                                <td>2020-04-03 23:57</td>
+                                <td>691 分钟</td>
+                                <td>0</td>
+                                                                <td class="nowrap">
+                                    <a href="http://zhishiku.little-star.me/?/admin/user/edit/uid-2" class="icon icon-edit md-tip" title="" data-original-title="编辑"></a>
+                                                                        <a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + &#39;/admin/ajax/forbidden_user/&#39; , &#39;uid=2&amp;status=1&#39;);" title="" class="icon icon-forbid md-tip" data-original-title="封禁用户">                                </a></td>
+                            </tr>
+                                                        <tr>
+                                <td><div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" value="1" name="uids[]" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
+                                <td>1</td>
+                                <td><a href="http://zhishiku.little-star.me/?/people/1" target="_blank">tong</a> </td>
+                                <td>550672392@qq.com</td>
+                                <td>注册会员</td>
+                                <td>超级管理员</td>
+                                <td>2020-04-02 11:06</td>
+                                <td>3 秒前</td>
+                                <td>1772 分钟</td>
+                                <td>0</td>
+                                                                <td class="nowrap">
+                                    <a href="http://zhishiku.little-star.me/?/admin/user/edit/uid-1" class="icon icon-edit md-tip" title="" data-original-title="编辑"></a>
+                                                                                                        </td>
+                            </tr>
+                                                    </tbody>
+                    </table>
+                    </form>
+                                </div>
+
+                <div class="mod-table-foot">
+                                    <div class="col-sm-4 col-xs-12">
+                        <a class="btn btn-danger" onclick="del()">删除</a>
+                    </div>
+                                    <div class="col-xs-12 col-sm-8">
+                                            </div>
+                </div>
+                
+            </div>
+
+            <div class="tab-pane" id="search">
+                <form method="post" action="http://zhishiku.little-star.me/?/admin/user/list/" onsubmit="return false;" id="search_form" class="form-horizontal" role="form">
+
+                    <input name="action" type="hidden" value="search">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">用户名:</label>
+
+                        <div class="col-sm-5 col-xs-8">
+                            <input class="form-control" type="text" value="" name="user_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">邮箱:</label>
+
+                        <div class="col-sm-5 col-xs-8">
+                            <input class="form-control" type="text" value="" name="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">用户组:</label>
+
+                        <div class="col-sm-5 col-xs-8">
+                            <select name="group_id" class="form-control">
+                                <option value=""></option>
+                                                                <option value="1">超级管理员</option>
+                                                            <option value="2">前台管理员</option>
+                                                            <option value="3">未验证会员</option>
+                                                            <option value="4">普通会员</option>
+                                                            <option value="99">游客</option>
+                                                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">最后登录 IP 段:</label>
+
+                        <div class="col-sm-5 col-xs-8">
+                            <input class="form-control" type="text" value="" name="ip">
+
+                            <span class="help-block">限 C 段, 如: 203.31.42.*</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">金币:</label>
+
+                        <div class="col-sm-6 col-xs-9">
+                            <div class="row">
+                                <div class="col-xs-11  col-sm-5 mod-double">
+                                    <input type="text" class="form-control" name="integral_min" value="">
+                                </div>
+                                <span class="mod-symbol col-xs-1 col-sm-1">
+                                -
+                                </span>
+                                <div class="col-xs-11 col-sm-5">
+                                    <input type="text" class="form-control" name="integral_max" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">威望:</label>
+
+                        <div class="col-sm-6 col-xs-9">
+                            <div class="row">
+                                <div class="col-xs-11  col-sm-5 mod-double">
+                                    <input type="text" class="form-control" name="reputation_min" value="">
+                                </div>
+                                <span class="mod-symbol col-xs-1 col-sm-1">
+                                -
+                                </span>
+                                <div class="col-xs-11 col-sm-5">
+                                    <input type="text" class="form-control" name="reputation_max" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">职业:</label>
+
+                        <div class="col-sm-5 col-xs-8">
+                            <select name="category_id" class="form-control">
+                                <option value="0"></option>
+                                                                    <option value="1">销售</option>
+                                                                    <option value="2">市场/市场拓展/公关</option>
+                                                                    <option value="3">商务/采购/贸易</option>
+                                                                    <option value="4">计算机软、硬件/互联网/IT</option>
+                                                                    <option value="5">电子/半导体/仪表仪器</option>
+                                                                    <option value="6">通信技术</option>
+                                                                    <option value="7">客户服务/技术支持</option>
+                                                                    <option value="8">行政/后勤</option>
+                                                                    <option value="9">人力资源</option>
+                                                                    <option value="10">高级管理</option>
+                                                                    <option value="11">生产/加工/制造</option>
+                                                                    <option value="12">质控/安检</option>
+                                                                    <option value="13">工程机械</option>
+                                                                    <option value="14">技工</option>
+                                                                    <option value="15">财会/审计/统计</option>
+                                                                    <option value="16">金融/银行/保险/证券/投资</option>
+                                                                    <option value="17">建筑/房地产/装修/物业</option>
+                                                                    <option value="18">交通/仓储/物流</option>
+                                                                    <option value="19">普通劳动力/家政服务</option>
+                                                                    <option value="20">零售业</option>
+                                                                    <option value="21">教育/培训</option>
+                                                                    <option value="22">咨询/顾问</option>
+                                                                    <option value="23">学术/科研</option>
+                                                                    <option value="24">法律</option>
+                                                                    <option value="25">美术/设计/创意</option>
+                                                                    <option value="26">编辑/文案/传媒/影视/新闻</option>
+                                                                    <option value="27">酒店/餐饮/旅游/娱乐</option>
+                                                                    <option value="28">化工</option>
+                                                                    <option value="29">能源/矿产/地质勘查</option>
+                                                                    <option value="30">医疗/护理/保健/美容</option>
+                                                                    <option value="31">生物/制药/医疗器械</option>
+                                                                    <option value="32">翻译（口译与笔译）</option>
+                                                                    <option value="33">公务员</option>
+                                                                    <option value="34">环境科学/环保</option>
+                                                                    <option value="35">农/林/牧/渔业</option>
+                                                                    <option value="36">兼职/临时/培训生/储备干部</option>
+                                                                    <option value="37">在校学生</option>
+                                                                    <option value="38">其他</option>
+                                                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label">居住地:</label>
+
+                        <div class="col-sm-3 col-xs-3">
+                            <select name="province" class="select_area form-control" style="display: inline-block;"><option value="">请选择省份或直辖市</option><option value="安徽省">安徽省</option><option value="北京市">北京市</option><option value="福建省">福建省</option><option value="甘肃省">甘肃省</option><option value="广东省">广东省</option><option value="广西壮族自治区">广西壮族自治区</option><option value="贵州省">贵州省</option><option value="海南省">海南省</option><option value="河北省">河北省</option><option value="河南省">河南省</option><option value="黑龙江省">黑龙江省</option><option value="湖北省">湖北省</option><option value="湖南省">湖南省</option><option value="吉林省">吉林省</option><option value="江苏省">江苏省</option><option value="江西省">江西省</option><option value="辽宁省">辽宁省</option><option value="内蒙古自治区">内蒙古自治区</option><option value="宁夏回族自治区">宁夏回族自治区</option><option value="青海省">青海省</option><option value="山东省">山东省</option><option value="山西省">山西省</option><option value="陕西省">陕西省</option><option value="上海市">上海市</option><option value="四川省">四川省</option><option value="天津市">天津市</option><option value="西藏自治区">西藏自治区</option><option value="新疆维吾尔自治区">新疆维吾尔自治区</option><option value="云南省">云南省</option><option value="浙江省">浙江省</option><option value="重庆市">重庆市</option><option value="香港">香港</option><option value="澳门">澳门</option><option value="台湾">台湾</option></select>
+                        </div>
+                        <div class="col-sm-3 col-xs-3">
+                            <select name="city" class="select_area form-control collapse"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-5 col-xs-8">
+                            <button type="button" onclick="AWS.ajax_post($(&#39;#search_form&#39;));" class="btn btn-primary">搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="remove">
+                <div class="table-responsive">
+                                    </div>
+                            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="./user-list_files/layer.js.下载"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('.select_area').LocationSelect({
+        labels: ["请选择省份或直辖市", "请选择城市"],
+        elements: document.getElementsByTagName("select"),
+        detector: function () {
+            this.select(["", ""]);
+        },
+        dataUrl: G_BASE_URL.replace('/?', '') + '/static/js/areas.js'
+    });
+});
+function del(){
+    layer.open({
+        type: 1,
+        area:['300px','200px'],
+        content: $('#reason'),
+        shadeClose: true,
+        title:_t('请选择原因'),
+        btn:[_t('确定'),_t('取消')],
+        yes:function(){
+            if(!$('select[name=reason]').val()){
+                layer.msg(_t('请选择原因'));
+                return;
+            }
+            AWS.ajax_post($('#users_form'));
+        }
+    });
+}
+function ban(url,param){
+    layer.open({
+        type: 1,
+        area:['300px','200px'],
+        content: $('#reason'),
+        shadeClose: true,
+        title:_t('请选择原因'),
+        btn:[_t('确定'),_t('取消')],
+        yes:function(){
+            if(!$('select[name=reason]').val()){
+                layer.msg(_t('请选择原因'));
+                return;
+            }
+            AWS.ajax_request(url,param+'&reason='+$('select[name=reason]').val());
+        }
+    });
+}
+function unban(url,param){
+    AWS.ajax_request(url,param);
+}
+</script>
+
+<div class="aw-footer">
+    <p>&nbsp;
+    Copyright © 2020 - Powered By 东方锐智    
+    </p>
+</div>
+
+<!-- DO NOT REMOVE -->
+<div id="aw-ajax-box" class="aw-ajax-box"></div>
+
+
+<div style="display:none;" id="__crond"><img src="./user-list_files/saved_resource" width="1" height="1"></div>
+
+<!-- Escape time: 0.040325880050659 --><!-- / DO NOT REMOVE -->
+
+
+
+</body></html>

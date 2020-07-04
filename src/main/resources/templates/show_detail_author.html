@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://zhishiku.little-star.me/?/article/3 -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="renderer" content="webkit">
+    <title>python基础3</title>
+    <meta name="keywords" content="python,基础">
+    <meta name="description" content="python基础3 - python基础知识第3小节
+
+
+	
+
+
+
+ 
+
+ 
+
+
+ 
+
+
+ 
+">
+    <!--<base href="http://zhishiku.little-star.me/?/">--><base href="."><!--[if IE]></base><![endif]-->
+    <link href="http://zhishiku.little-star.me/static/css/default/img/favicon.ico?v=20200220" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./show_detail_author_files/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./show_detail_author_files/icon.css">
+            <link href="./show_detail_author_files/common.css" rel="stylesheet" type="text/css">
+        <link href="./show_detail_author_files/link.css" rel="stylesheet" type="text/css">
+        <link href="./show_detail_author_files/style.css" rel="stylesheet" type="text/css">
+                <link rel="stylesheet" href="./show_detail_author_files/tomorrow.css">
+        <script type="text/javascript">
+        var _D57CA352488344C3A0B2646DDB9ECD03="c7f0a7625d79c89b9ed5b94b30acdd44";
+        var G_POST_HASH=_D57CA352488344C3A0B2646DDB9ECD03;
+        var G_INDEX_SCRIPT = "?/";
+        var G_SITE_NAME = "东方锐智知识库";
+        var G_BASE_URL = "http://zhishiku.little-star.me/?";
+        var G_STATIC_URL = "http://zhishiku.little-star.me/static";
+        var G_UPLOAD_URL = "http://zhishiku.little-star.me/uploads";
+        var G_USER_ID = "1";
+        var G_USER_NAME = "tong";
+        var G_UPLOAD_ENABLE = "Y";
+        var G_UNREAD_NOTIFICATION = 0;
+        var G_NOTIFICATION_INTERVAL = 100000;
+        var G_CAN_CREATE_TOPIC = "1";
+        var G_ADVANCED_EDITOR_ENABLE = "Y";
+        var FILE_TYPES = "jpg,jpeg,png,gif,zip,doc,docx,rar,pdf,psd,mp4";
+        var G_DRAFT_ENABLED = "N";
+        var G_PER_PAGE = "10";
+        var G_INDEX_PER_PAGE = "20";
+        var G_PRIVATEKEY = "pvjxzjmzvewfscft";
+        var G_IV = "qvibvaiwgouxwjeu";
+        var G_QUICK_PUBLISH_HUMAN_VALID = "0";
+    </script>
+            <script src="./show_detail_author_files/jquery.2.js.下载" type="text/javascript"></script>
+        <script src="./show_detail_author_files/jquery.form.js.下载" type="text/javascript"></script>
+        <script src="./show_detail_author_files/plug-in_module.js.下载" type="text/javascript"></script>
+        <script src="./show_detail_author_files/aws.js.下载" type="text/javascript"></script>
+        <script src="./show_detail_author_files/aw_template.js.下载" type="text/javascript"></script>
+        <script src="./show_detail_author_files/layer.js.下载" type="text/javascript"></script><link rel="stylesheet" href="./show_detail_author_files/layer.css" id="layuicss-layer">
+        <script src="./show_detail_author_files/app.js.下载" type="text/javascript"></script>
+            <script type="text/javascript" src="./show_detail_author_files/compatibility.js.下载"></script>
+    <script type="text/javascript" src="./show_detail_author_files/laydate.js.下载"></script><link rel="stylesheet" href="./show_detail_author_files/laydate.css" id="layuicss-laydate">
+    <script type="text/javascript" src="./show_detail_author_files/gt.js.下载"></script>
+    <script src="./show_detail_author_files/crypto-js.js.下载"></script>
+    <script src="./show_detail_author_files/highlight.pack.js.下载"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+    <style type="text/css">
+    .geetest_radar_tip_content{
+        position: initial !important;
+    }
+    </style>
+<!--[if lte IE 8]>
+	<script type="text/javascript" src="http://zhishiku.little-star.me/static/js/respond.js"></script>
+<![endif]-->
+<style type="text/css">.fancybox-margin{margin-right:17px;}</style><script src="./show_detail_author_files/share.js.下载"></script><link href="./show_detail_author_files/share.css" rel="styleSheet" type="text/css"></head>
+<body><noscript unselectable="on" id="noscript">
+    <div class="aw-404 aw-404-wrap container">
+        <img src="http://zhishiku.little-star.me/static/common/no-js.jpg">
+        <p>你的浏览器禁用了JavaScript, 请开启后刷新浏览器获得更好的体验!</p>
+    </div>
+</noscript>
+<div class="aw-top-menu-wrap">
+	<div class="container">
+		<!-- logo -->
+		<div class="aw-logo hidden-xs">
+			<a href="http://zhishiku.little-star.me/"></a>
+		</div>
+		<!-- end logo -->
+		<!-- 搜索框 -->
+		<div class="aw-search-box  hidden-xs hidden-sm">
+			<form class="navbar-search" action="http://zhishiku.little-star.me/?/search/" id="global_search_form" method="post">
+				<label class="oldPwdTip aw-search-query-label" onclick="$(this).hide();$(&#39;#aw-search-query&#39;).focus();">搜索问题、话题或人...</label> 				<input class="form-control search-query" type="text" value="" autocomplete="off" name="q" id="aw-search-query" onfocus="hideOldPwdTip(&#39;aw-search-query&#39;);" onblur="toggleOldPwdTip(&#39;aw-search-query&#39;,this.value);">
+				<span title="搜索" id="global_search_btns" onclick="$(&#39;#global_search_form&#39;).submit();"><i class="icon icon-search"></i></span>
+				<div class="aw-dropdown">
+					<div class="mod-body">
+						<p class="title">输入关键字进行搜索</p>
+						<ul class="aw-dropdown-list collapse"></ul>
+						<p class="search"><span>搜索:</span><a onclick="$(&#39;#global_search_form&#39;).submit();"></a></p>
+					</div>
+					<div class="mod-footer">
+						<a href="javascript:;" onclick="$(&#39;#header_publish&#39;).click();" class="pull-right btn btn-mini btn-success publish">发起问题</a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- end 搜索框 -->
+		<!-- 导航 -->
+		<div class="aw-top-nav navbar">
+			<div class="navbar-header">
+				<button class="navbar-toggle pull-left">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+				<ul class="nav navbar-nav">
+																	<li>
+							<a href="http://zhishiku.little-star.me/?/explore/"><i class="icon icon-list"></i> 发现</a>
+						</li>
+																							<li>
+							<a href="http://zhishiku.little-star.me/?/home/"><i class="icon icon-home"></i> 动态</a>
+						</li>
+																							<li>
+							<a href="http://zhishiku.little-star.me/?/column/"><i class="icon icon-column"></i> 专栏</a>
+						</li>
+																													<li>
+							<a href="http://zhishiku.little-star.me/?/notifications/" class=""><i class="icon icon-bell"></i> 通知</a>
+							<span class="badge badge-important" style="display:none" id="notifications_unread">0</span>
+							<div class="aw-dropdown pull-right hidden-xs">
+								<div class="mod-body">
+									<ul id="header_notification_list"><p class="aw-padding10" align="center">没有未读通知</p></ul>
+								</div>
+								<div class="mod-footer">
+									<a href="http://zhishiku.little-star.me/?/notifications/">查看全部</a>
+								</div>
+							</div>
+						</li>
+																						<li>
+						<a style="font-weight:bold;">· · ·</a>
+						<div class="dropdown-list pull-right">
+							<ul id="extensions-nav-list">
+																								
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<!-- end 导航 -->
+		<!-- 用户栏 -->
+		<div class="aw-user-nav">
+			<!-- 登陆&注册栏 -->
+						<a href="http://zhishiku.little-star.me/?/people/1" class="aw-user-nav-dropdown">
+				<img alt="tong" src="./show_detail_author_files/01_avatar_mid.jpg">
+				
+			</a>
+			<div class="aw-dropdown dropdown-list pull-right">
+				<ul class="aw-dropdown-list">
+					<li><a href="http://zhishiku.little-star.me/?/inbox/"><i class="icon icon-inbox"></i> 私信<span class="badge badge-important collapse" id="inbox_unread" style="display: none;">0</span></a></li>
+					<li class="hidden-xs"><a href="http://zhishiku.little-star.me/?/account/setting/profile/"><i class="icon icon-setting"></i> 设置</a></li>
+										<li class="hidden-xs"><a href="http://zhishiku.little-star.me/?/admin/"><i class="icon icon-job"></i> 管理</a></li>
+										<li id="changeSkin"><a href="javascript:void(0);"><i class="icon icon-skin"></i> 换肤</a></li>
+					<li><a href="http://zhishiku.little-star.me/?/account/logout/"><i class="icon icon-logout"></i> 退出</a></li>
+				</ul>
+			</div>
+			<div class="aw-dropdown dropdown-list pull-right" id="skinList" style="left: 100%;top:200%;display: none">
+				<ul class="aw-dropdown-list">
+					<li><a href="http://zhishiku.little-star.me/?/account/change_skin/?type=common"><i class="icon icon-draft"></i> 默认&nbsp;&nbsp;√</a></li>
+					<li><a href="http://zhishiku.little-star.me/?/account/change_skin/?type=green"><i class="icon icon-draft"></i> 绿色&nbsp;&nbsp;</a></li>
+					<li><a href="http://zhishiku.little-star.me/?/account/change_skin/?type=orange"><i class="icon icon-draft"></i> 橙色&nbsp;&nbsp;</a></li>
+				</ul>
+			</div>
+						<!-- end 登陆&注册栏 -->
+		</div>
+		<!-- end 用户栏 -->
+		<!-- 发起 -->
+				<div class="aw-publish-btn">
+
+			<a id="header_publish" class="btn-primary" href="http://zhishiku.little-star.me/?/publish/" onclick="AWS.dialog(&#39;publish&#39;, {&#39;category_enable&#39;:&#39;1&#39;, &#39;category_id&#39;:&#39;0&#39;, &#39;topic_title&#39;:&#39;&#39;}); return false;"><i class="icon icon-ask"></i>发起</a>
+			<div class="dropdown-list pull-right">
+				<ul>
+					<li>
+						<form method="post" action="http://zhishiku.little-star.me/?/publish/">
+														<a onclick="$(this).parents(&#39;form&#39;).submit();">问题</a>
+						</form>
+
+					</li>
+					
+										<li>
+						<form method="post" action="http://zhishiku.little-star.me/?/publish/article/">
+														<a onclick="$(this).parents(&#39;form&#39;).submit();">文章</a>
+						</form>
+					</li>
+																								</ul>
+			</div>
+		</div>
+				<!-- end 发起 -->
+	</div>
+</div>
+
+<script>
+	$(function () {
+		var $changeSkin = $("#changeSkin"), $skinList = $("#skinList");
+		$changeSkin.mouseenter(function () {
+			$skinList.stop(true,true).show();
+		});
+		$changeSkin.mouseleave(function (e) {
+			$skinList.hide();
+		});
+		$skinList.mouseover(function () {
+			$(this).stop(true,true).show();
+		});
+		$skinList.mouseleave(function (e) {
+			$(this).hide();
+		})
+	})
+</script>
+<style type="text/css">
+.bdshare-button-style0-16 a{
+    margin: 6px 15px 6px 10px;
+}
+.bd_weixin_popup .bd_weixin_popup_main {
+    padding: 10px 10px;
+}
+.mod-body table td{border:1px solid #ddd}
+.bdsharebuttonbox a{
+    margin: 6px 6px 6px 0;
+}  
+.dashang{
+    display: inline-block;
+    background: url('http://zhishiku.little-star.me/static/common/longwb_btn.png') no-repeat;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    overflow: hidden;
+    text-indent: -999px;           
+    width: 62px;
+    height: 62px;
+    background-position: 0 -100px;
+}
+.dashang:hover{
+    background-position: 0 -170px;
+}
+.shangmoney{
+    background: url(http://zhishiku.little-star.me/static/common/reward_line.png?v=N4bOikxY) no-repeat center;
+    margin-top: 21px;
+}
+.face_reward{
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+}
+.fend_app_reward_person{
+    width: 30px;
+    height: 30px;
+    margin: 0 8px;
+    float: left;
+}
+.fend_app_reward_persons{
+    width: 527px;
+    margin: 15px auto;
+    margin-bottom: 15px;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0;
+}
+.ckeditor-html5-video video{
+    width: 100%;
+}
+</style>
+
+<div class="aw-container-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content aw-article-content">
+                    <div class="aw-mod aw-topic-bar" id="question_topic_editor" data-type="article" data-id="3">
+                        <div class="tag-bar clearfix">
+                                                        <span class="icon-inverse aw-edit-topic"><i class="icon icon-edit"></i> 添加话题</span>                        </div>
+                    </div>
+                    <div class="aw-mod aw-question-detail">
+                        <div class="mod-head">
+                            <h1>
+                                python基础3                            </h1>
+                            <input type="hidden" id="share_content" value="">
+                            <input type="hidden" id="share_url" value="">
+                            <input type="hidden" id="share_title" value="">
+                                                        <div class="operate clearfix">
+                                <!-- 下拉菜单 -->
+                                <div class="btn-group pull-left">
+                                    <a class="btn btn-gray dropdown-toggle" href="javascript:;">...</a>
+                                    <div class="dropdown-menu aw-dropdown pull-right" role="menu" aria-labelledby="dropdownMenu">
+                                        <ul class="aw-dropdown-list">
+                                            <li>
+                                                <a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + &#39;/article/ajax/lock/&#39;, &#39;article_id=3&#39;);">锁定文章</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" onclick="AWS.dialog(&#39;confirm&#39;, {&#39;message&#39; : &#39;确认删除?&#39;}, function(){AWS.ajax_request(G_BASE_URL + &#39;/article/ajax/remove_article/&#39;, &#39;article_id=3&#39;);});">删除文章</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + &#39;/article/ajax/set_recommend/&#39;, &#39;action=set&amp;article_id=3&#39;);">推荐文章</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" onclick="AWS.dialog(&#39;confirm&#39;, {&#39;message&#39; : &#39;确认置顶?&#39;}, function(){$(&#39;.modal-backdrop&#39;).css({display:&#39;none&#39;});AWS.ajax_request(G_BASE_URL + &#39;/article/ajax/set_top_article/&#39;, &#39;action=set&amp;article_id=3&#39;);});">置顶文章</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" onclick="AWS.dialog(&#39;recommend&#39;, {&#39;type&#39;: &#39;article&#39;, &#39;item_id&#39;: 3, &#39;focus_id&#39;: &#39;&#39;});">添加到帮助中心</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- end 下拉菜单 -->
+                            </div>
+                                                    </div>
+                        <div class="mod-body">
+                            <div class="content markitup-box">
+                                <p>python基础知识第3小节</p>
+
+<p></p><div class="aw-upload-img-list active">
+	<a href="./show_detail_author_files/264826331723d4c9f138533108202788.png" target="_blank" data-fancybox-group="thumb" rel="lightbox"><img src="./show_detail_author_files/264826331723d4c9f138533108202788.png" class="img-polaroid" title="/uploads/article/20200414/264826331723d4c9f138533108202788.png" alt="/uploads/article/20200414/264826331723d4c9f138533108202788.png"></a>
+</div>
+<p></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<div class="ckeditor-html5-video" data-responsive="true" style="text-align: center;">
+<video controls="controls" src="/uploads/article/20200414/4d1823db1b9b093ff99a19745cbbebcb.mp4" style="max-width: 100%; height: auto;">&nbsp;</video>
+</div>
+
+<p>&nbsp;</p>
+
+                                
+                                                            </div>
+                                                                                   <div class="meta clearfix">
+                                <div class="aw-article-vote pull-left disabled">
+                                    <a href="javascript:;" class="agree" onclick=""><i class="icon icon-agree"></i> <b>0</b></a>
+                                                                    </div>
+                                <span class="pull-right  more-operate">
+                                                                        <a class="text-color-999" href="http://zhishiku.little-star.me/?/publish/article/3"><i class="icon icon-edit"></i> 编辑</a>
+                                    
+                                    <a href="javascript:;" onclick="AWS.dialog(&#39;favorite&#39;, {item_id:3, item_type:&#39;article&#39;});" class="text-color-999"><i class="icon icon-favor"></i> 收藏</a>
+                                    <a class="text-color-999 dropdown-toggle" data-toggle="dropdown" id="article_share">
+                                        <i class="icon icon-share"></i> 分享                                    </a>
+                                    <div class="aw-dropdown shareout pull-right bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1592616110194">
+                                        <ul class="aw-dropdown-list">
+                                            <li><a href="http://zhishiku.little-star.me/?/#" class="bds_weixin" data-cmd="weixin" title="分享到微信"> 微信</a></li>
+                                            <li><a href="http://zhishiku.little-star.me/?/#" class="bds_sqq" data-cmd="sqq" title="分享到QQ"> QQ</a></li>
+                                            <li><a href="http://zhishiku.little-star.me/?/#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"> 微博</a></li>
+                                            <li><a href="http://zhishiku.little-star.me/?/#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"> 空间</a></li>
+                                        </ul>
+                                    </div>
+                                    <a href="javascript:;" class="text-color-999" onclick="AWS.dialog(&#39;report&#39;, {item_type:&#39;article&#39;, item_id:3,item_reson:&#39;&#39;})"><i class="icon icon-report"></i>举报</a>                                    <em class="text-color-999">2020-04-07</em>
+                                </span>
+                            </div>
+                           
+                        </div>
+                        <div class="mod-footer">
+                            
+                        </div>
+                                             </div>
+
+                    <!-- 文章评论 -->
+                    <div class="aw-mod">
+                        <div class="mod-head common-head">
+                            <h2>0 个评论</h2>
+                        </div>
+
+                        <div class="mod-body aw-feed-list">
+                                                    </div>
+
+                        
+                                            </div>
+                    <!-- end 文章评论 -->
+
+                    <!-- 回复编辑器 -->
+                    <div class="aw-mod aw-article-replay-box">
+                        <a name="answer_form"></a>
+                                                <form action="http://zhishiku.little-star.me/?/article/ajax/save_comment/" onsubmit="return false;" method="post" id="answer_form" onkeydown="if(event.keyCode==13)return false;">
+                        <input type="hidden" name="post_hash" value="c7f0a7625d79c89b9ed5b94b30acdd44">
+                        <input type="hidden" name="article_id" value="3">
+                        <div class="mod-head">
+                            <a href="http://zhishiku.little-star.me/?/people/" class="aw-user-name"><img alt="tong" src="./show_detail_author_files/01_avatar_mid.jpg"></a>
+                        </div>
+                        <div class="mod-body">
+                            <textarea rows="3" name="message" id="comment_editor" class="form-control autosize" placeholder="写下你的评论..." style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 74px;"></textarea>
+                        </div>
+                        <div class="mod-footer clearfix">
+                            <a href="javascript:;" onclick="AWS.ajax_post($(&#39;#answer_form&#39;), AWS.ajax_processer, &#39;reply&#39;);" class="btn btn-normal btn-success pull-right btn-submit btn-reply" id="publish_submit">回复</a>
+                                                    </div>
+                        </form>
+                                            </div>
+                    <!-- end 回复编辑器 -->
+                </div>
+                <!-- 侧边栏 -->
+                <div class="col-sm-12 col-md-3 aw-side-bar hidden-sm hidden-xs">
+                    <!-- 发起人 -->
+                                        <div class="aw-mod user-detail">
+                        <div class="mod-head">
+                            <h3>发起人</h3>
+                        </div>
+                        <div class="mod-body">
+                            <dl>
+                                <dt class="pull-left aw-border-radius-5">
+                                    <a href="http://zhishiku.little-star.me/?/people/1"><img alt="tong" src="./show_detail_author_files/01_avatar_mid.jpg"></a>
+                                </dt>
+                                <dd class="pull-left">
+                                    <a class="aw-user-name" href="http://zhishiku.little-star.me/?/people/1" data-id="1">tong</a>
+                                    
+                                                                        <p></p>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="mod-footer clearfix">
+                                                    </div>
+                    </div>
+                                        <!-- end 发起人 -->
+
+                    
+                                    </div>
+                <!-- end 侧边栏 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var ANSWER_EDIT_TIME = 30;
+var pay_data={
+            'url':G_BASE_URL+'/explore/doact/?p=reward&a=add',
+            'remarks':"tong打赏tong",
+            'both_id':"3",
+            'passive_uid':"1",
+            'cate':2,
+            'notify_url':G_BASE_URL+'/pay/notify/'
+        };
+    $(document).ready(function () {
+        if ($('.aw-article-vote.disabled').length)
+        {
+            $('.aw-article-vote.disabled a').attr('onclick', '');
+        }
+
+        $('.operate .btn-group').click(function(){
+            if ($(this).hasClass('open'))
+            {
+                $(this).removeClass('open');
+            }
+            else
+            {
+                $(this).addClass('open');
+            }
+        });
+
+        AWS.at_user_lists('#wmd-input');
+
+        AWS.Init.init_article_comment_box($('.aw-article-comment'));
+        $("#article_share").click(function(){
+            $('#share_content').val('python基础3');
+            $('#share_title').val('python基础3');
+            $('#share_url').val(G_BASE_URL + '/article/3');
+
+        });
+        window._bd_share_config={
+            "common":{
+                bdText : 'python基础3',
+                bdDesc : 'python基础3',
+                bdUrl : G_BASE_URL + '/question/3',
+                onBeforeClick:function(cmd,config){
+                    return {bdText:$('#share_content').val(),
+                        bdDesc:$('#share_title').val(),
+                        bdUrl:$('#share_url').val()
+                    }
+
+                }
+            },
+            "share" : [{
+                bdCustomStyle :G_STATIC_URL +"/api/css/share.css",
+            }]
+        };
+        // window._bd_share_main={
+        //     "jscfg":{
+        //         domain:{
+        //         staticUrl:"http://zhishiku.little-star.me"
+        //         }
+        //     },
+        // }
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src=G_STATIC_URL +'/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    });
+    </script>
+<div class="aw-footer-wrap">
+    <div class="aw-footer">
+        Copyright © 2020, All Rights Reserved
+
+        <span class="hidden-xs">Powered By 东方锐智</span>
+
+            </div>
+</div>
+
+<a class="aw-back-top hidden-xs" href="javascript:;" onclick="$.scrollTo(1, 600, {queue:true});" style="display: none;"><i class="icon icon-up"></i></a>
+
+
+<!-- DO NOT REMOVE -->
+<div id="aw-ajax-box" class="aw-ajax-box"></div>
+
+<div style="display:none;" id="__crond"><img src="./show_detail_author_files/saved_resource" width="1" height="1"></div>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cdiv%20style%3D%27text-align%3Acenter%27%3E%3Cspan id='cnzz_stat_icon_1273638993'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273638993%26show%3Dpic' type='text/javascript'%3E%3C/script%3E%3C/div%3E"));</script><div style="text-align:center"><span id="cnzz_stat_icon_1273638993"><a href="https://www.cnzz.com/stat/website.php?web_id=1273638993" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./show_detail_author_files/pic.gif"></a></span><script src="./show_detail_author_files/z_stat.php" type="text/javascript"></script><script src="./show_detail_author_files/core.php" charset="utf-8" type="text/javascript"></script></div>
+
+<!-- Escape time: 0.089395999908447 --><!-- / DO NOT REMOVE -->
+
+
+
+<textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; overflow: hidden; transition: none 0s ease 0s; height: 0px !important; min-height: 0px !important; font-family: &quot;Helvetica Neue&quot;, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: 20px; width: 638.5px;" class="autosizejs"></textarea></body></html>

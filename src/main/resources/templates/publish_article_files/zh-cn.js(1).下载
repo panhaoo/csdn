@@ -1,0 +1,13 @@
+CKEDITOR.plugins.setLang("pbckcode", "zh-cn",
+  {
+    title: '代码片段',
+    addCode: '添加代码',
+    editCode: '修改代码',
+    editor: '编辑器',
+    settings: '设置',
+    mode: '类型',
+    tabSize: '缩进',
+    theme: '主题',
+    softTab: '启用软选项卡',
+    emmet: '启用Emme'
+  });
