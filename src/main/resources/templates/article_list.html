@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>欢迎页面-DFRZ</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet"  th:href="@{/css/font.css}">
+  <link rel="stylesheet"  th:href="@{/css/xadmin.css}">
+  <script type="text/javascript" th:src="@{/plugins/jquery/jquery.min.js}" ></script>
+  <script  th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+  <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+  <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+  
+  <body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <form id="sreach" class="layui-form layui-col-md12 x-so"  lay-filter = "test1">
+          <input style="margin-left: 80%" type="text" name="searchid" required="" lay-verify="searchid"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-event="sreach" ><i class="layui-icon">&#xe615;</i></button>
+        </form>
+      </div>
+      <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','/admin/toUAdd',600,400)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+      </xblock>
+      <table id="demo" class="layui-table" lay-filter = "test">
+
+      </table>
+
+      <div class="page">
+        <div>
+          <a class="prev" href="">&lt;&lt;</a>
+          <a class="num" href="">1</a>
+          <span class="current">2</span>
+          <a class="num" href="">3</a>
+          <a class="num" href="">489</a>
+          <a class="next" href="">&gt;&gt;</a>
+        </div>
+      </div>
+
+    </div>
+    <script>
+      layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+      });
+
+       /*用户-停用*/
+      function member_stop(obj,id){
+          layer.confirm('确认要停用吗？',function(index){
+
+              if($(obj).attr('title')=='启用'){
+
+                //发异步把用户状态进行更改
+                $(obj).attr('title','停用')
+                $(obj).find('i').html('&#xe62f;');
+
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                layer.msg('已停用!',{icon: 5,time:1000});
+
+              }else{
+                $(obj).attr('title','启用')
+                $(obj).find('i').html('&#xe601;');
+
+                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                layer.msg('已启用!',{icon: 5,time:1000});
+              }
+              
+          });
+      }
+
+      /*用户-删除*/
+      function member_del(obj,id){
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $(obj).parents("tr").remove();
+              layer.msg('已删除!',{icon:1,time:1000});
+          });
+      }
+
+
+
+      function delAll (argument) {
+
+        var data = tableCheck.getData();
+  
+        layer.confirm('确认要删除吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+      }
+    </script>
+
+    <script type="text/html" id="barDemo">
+      <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+    </script>
+    <script>
+      layui.use('table',function () {
+        var table = layui.table;
+
+        table.render({
+          elem:'#demo',
+          height:312,
+          url:'/admin/getUsers',
+          page:true,
+          cols:[
+            [//表头
+            {field:'id',title:'ID',width:80,sort:true,fixed:'left'},
+            {field:'uname',title:'用户名',width:150},
+            {field:'upass',title:'密码',width:100,sort:true},
+            {field:'headpic',title:'头像',width:100,templet:function (d) {
+            return  "<div><img id=\"img_headpic\" src=\"/images/default.jpg\" width=\"30px\" height=\"30px\"></div>"    }},
+            {field:'状态',title:'状态',width:100,templet:function (d) {
+                  return "<button type=\"button\" class=\"layui-btn layui-btn-sm layui-btn-danger\">启用</button>"
+                }
+                },
+              {field:'right',title:"操作",width:250,align:'center',toolbar:'#barDemo'}
+
+            ]
+          ]
+        });
+
+        table.on('tool(test)',function (obj) {
+         // var checkStatus = table.checkStatus(obj.config.id);
+         var data = obj.data;
+          switch(obj.event){
+            case 'detail':
+              // layer.msg('查看:[ id :'+data.id+',用户名:'+data.uname+',密码:'+data.upass+']');
+              x_admin_show('查看用户','/admin/toDetail/'+data.id,500,300);
+              break;
+            case 'edit':
+              // layer.msg('编辑:[ id :'+data.id+']');
+              x_admin_show('编辑用户','/admin/toEdit/'+data.id,600,400);
+              break;
+            case 'del':
+              //layer.msg('删除:[ id :'+data.id+'');
+              layer.confirm("确认要删除吗？",function(){
+                deleteUser(data.id);
+                obj.del();
+                // layer.close(index);
+              })
+              break;
+          };
+
+        });
+
+      });
+
+      function deleteUser(id) {
+        //Ajax异步访问
+        $.ajax({
+          url:"/admin/delete/"+id,
+          dataType:"json",
+          success:function (data) {
+              layer.msg(data.msg);
+
+          }
+        })
+
+      }
+
+
+    </script>
+    <script>
+      layui.use(['form','layer'], function(){
+        $ = layui.jquery;
+        var form = layui.form
+                ,layer = layui.layer;
+
+        //自定义验证规则
+        form.verify({
+          searchid: function(value){
+            if(value.length <= 0){
+              return '账号至少得5个字符啊';
+            }
+          }
+
+        });
+
+        //监听提交
+        form.on('submit(search)', function(value){
+          console.log(value);
+          $.ajax({
+            url:"/admin/detail"+value,
+            dataType:"json",
+            data:data.field,
+            success:function (data) {
+              if(data.code == 0){
+                layer.alert("增加成功", {icon: 6},function () {
+                  // 获得frame索引
+                  var index = parent.layer.getFrameIndex(window.name);
+                  //关闭当前frame
+                  parent.layer.close(index);
+                })
+              }else{
+                layer.alert("增加成功",)
+              }
+
+            }
+          });
+          return false;
+        });
+
+
+      });
+    </script>
+    <script>
+      layui.use('upload', function(){
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+         done: function(res){
+            //上传完毕回调
+            layer.msg("上传成功");
+            var headpic=res.data.src;
+            $("#img_headpic").attr("src","/user/"+headpic);
+            $("#headpic").val(headpic);
+          }
+          ,error: function(){
+            //请求异常回调
+            layer.msg("上传失败");
+          }
+        });
+      });
+    </script>
+  </body>
+
+</html>
