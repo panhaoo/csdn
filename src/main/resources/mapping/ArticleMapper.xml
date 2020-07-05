@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pan.csdn.mapper.ArticleMapper">
+    <resultMap id="ArticleResultMapper" type="com.pan.csdn.bean.Article">
+        <!--主键-->
+        <id column="id" property="id"></id>
+        <!--普通字段-->
+        <result column="title" property="title"></result>
+        <result column="category" property="category"></result>
+        <result column="comment" property="comment"></result>
+        <result column="cover" property="cover"></result>
+        <result column="scontent" property="scontent"></result>
+        <result column="browse" property="browse"></result>
+        <result column="userid" property="userid"></result>
+        <result column="releasetime" property="releasetime"></result>
+        <result column="uname" property="uname"></result>
+    </resultMap>
+    <select id="getArticles" resultMap="ArticleResultMapper">
+        select article.*,user.uname from article,user
+        where article.userid = user.id
+    </select>
+
+</mapper>

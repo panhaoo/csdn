@@ -114,5 +114,13 @@ public class PortalController {
         }
         return result;
     }
+    @RequestMapping("/portal_index")
+    public ModelAndView toIndex(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index");
+        List<Article> articles = articleService.getArticles();
+        modelAndView.addObject("articles",articles);
+        return modelAndView;
+    }
 
 }

@@ -12,7 +12,13 @@ public class Article {
         //标题
         private String title;
         //内容
+        private String category;
+
         private Integer comment;
+
+        private String cover;
+
+        private String scontent;
 
         private Integer browse;
 
@@ -20,20 +26,26 @@ public class Article {
 
         private String releasetime;
 
+        private String uname;
         public Article(){
 
         }
 
-        public Article(Integer id, String title, Integer comment, Integer browse, Integer userid, String releasetime) {
-            this.id = id;
-            this.title = title;
-            this.comment = comment;
-            this.browse = browse;
-            this.userid = userid;
-            this.releasetime = releasetime;
-        }
 
-        public Integer getId() {
+    public Article(Integer id, String title, String category, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime, String uname) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.comment = comment;
+        this.cover = cover;
+        this.scontent = scontent;
+        this.browse = browse;
+        this.userid = userid;
+        this.releasetime = releasetime;
+        this.uname = uname;
+    }
+
+    public Integer getId() {
             return id;
         }
 
@@ -81,16 +93,50 @@ public class Article {
             this.releasetime = releasetime;
         }
 
-        @Override
-            public String toString(){
-                return "User{"+
-                        "id: "+id+
-                        ", 标题: "+title+
-                        ",评论: "+comment+
-                        ",浏览: "+browse+
-                        ",作者id: "+userid+
-                        ",发布时间: "+releasetime+
-                        "}";
-            }
+        public String getCategory() { return category; }
+
+        public void setCategory(String category) { this.category = category; }
+
+
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getScontent() {
+        return scontent;
+    }
+
+    public void setScontent(String scontent) {
+        this.scontent = scontent;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", comment=" + comment +
+                ", cover='" + cover + '\'' +
+                ", scontent='" + scontent + '\'' +
+                ", browse=" + browse +
+                ", userid=" + userid +
+                ", releasetime='" + releasetime + '\'' +
+                ", uname='" + uname + '\'' +
+                '}';
+    }
 }
 

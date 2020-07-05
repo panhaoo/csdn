@@ -19,7 +19,7 @@ public class ArticleServiceImpl implements IArticleService{
 
     @Override
     public List<Article> getArticles() {
-        return articleMapper.selectList(null);
+        return articleMapper.getArticles();
     }
 
     @Override
