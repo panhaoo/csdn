@@ -1,7 +1,6 @@
 package com.pan.csdn.service;
 
 import com.pan.csdn.bean.Article;
-import com.pan.csdn.bean.User;
 
 import java.util.List;
 

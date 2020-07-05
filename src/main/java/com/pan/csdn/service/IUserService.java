@@ -1,7 +1,6 @@
 package com.pan.csdn.service;
 
 import com.pan.csdn.bean.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,6 +10,7 @@ public interface IUserService {
     public User login(User user);
     public List<User> getUsers();
     public int getUsersCount();
-    public int update(User user);
-    public int delete(Integer id);
+    public int updateById(User user);
+    public int deleteById(Integer id);
+    public int deleteBatchIds(List<Integer> list);
 }

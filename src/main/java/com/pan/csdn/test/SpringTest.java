@@ -1,7 +1,5 @@
 package com.pan.csdn.test;
 
-import com.pan.csdn.bean.User;
-import com.pan.csdn.controller.UserController;
 import com.pan.csdn.service.IUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +14,6 @@ public class SpringTest {
     IUserService userService;
     @Test
     public void test01(){
-        userService.addUser(new User(1,"zhangsan","333"));
+       // userService.addUser(new User(1,"zhangsan","333"));
     }
 }
