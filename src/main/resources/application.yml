@@ -10,7 +10,7 @@ spring:
     suffix: .html  #后缀名
   datasource:
     name: localhost
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://106.54.179.76:3306/test?useUnicode=true&characterEncoding=utf8
     username: root
     password: root
     # 使用druid数据源
