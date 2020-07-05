@@ -34,14 +34,23 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
-          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          <input class="layui-input" placeholder="创建时间" name="end" id="end">
+          <div class="layui-input-inline">
+            <select name="contrller">
+              <option>资料类型</option>
+              <option>课件</option>
+              <option>作业</option>
+            </select>
+          </div>
+          
+         
+          <input type="text" name="username"  placeholder="请输入资料名称" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量恢复</button>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="x_admin_show('添加公共资源','./resource-add.html')"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
@@ -50,15 +59,12 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>ID</th>
-            <th>用户名</th>
-            <th>性别</th>
-            <th>手机</th>
-            <th>邮箱</th>
-            <th>地址</th>
-            <th>加入时间</th>
-            <th>状态</th>
-            <th>操作</th></tr>
+            <th>资源编号</th>
+            <th>资料名称</th>
+			<th>创建时间</th>
+            <th>资料类型</th>
+            <th>操作</th>
+            </tr>
         </thead>
         <tbody>
           <tr>
@@ -66,49 +72,35 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td>1</td>
-            <td>小明</td>
-            <td>男</td>
-            <td>13000000000</td>
-            <td>admin@mail.com</td>
-            <td>北京市 海淀区</td>
-            <td>2017-01-01 11:11:42</td>
-            <td class="td-status">
-              <span class="layui-btn layui-btn-danger layui-btn-mini">
-                                已删除
-                            </span>
+            <td>三阶段-第一次课作业</td>
+			 <td>2020-05-24</td>
+            <td><button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">作业</button></td>
             <td class="td-manage">
-              <a title="恢复" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe618;</i>
+              <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
+                <i class="layui-icon">&#xe63c;</i>
               </a>
               <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
-          <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
-            <td>1</td>
-            <td>小明</td>
-            <td>男</td>
-            <td>13000000000</td>
-            <td>admin@mail.com</td>
-            <td>北京市 海淀区</td>
-            <td>2017-01-01 11:11:42</td>
-            <td class="td-status">
-              <span class="layui-btn layui-btn-danger layui-btn-mini">
-                                已删除
-                            </span>
-            <td class="td-manage">
-              <a title="恢复" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe618;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-            </td>
-          </tr>
+		  <tr>
+		    <td>
+		      <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+		    </td>
+		    <td>2</td>
+		    <td>三阶段-第一次课-SpringIOC_PPT</td>
+			<td>2020-05-25</td>
+		    <td><button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger">课件</button></td>
+		    <td class="td-manage">
+		      <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
+		        <i class="layui-icon">&#xe63c;</i>
+		      </a>
+		      <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+		        <i class="layui-icon">&#xe640;</i>
+		      </a>
+		    </td>
+		  </tr>
         </tbody>
       </table>
       <div class="page">
@@ -138,6 +130,29 @@
         });
       });
 
+       /*用户-停用*/
+      function member_stop(obj,id){
+          layer.confirm('确认要停用吗？',function(index){
+
+              if($(obj).attr('title')=='启用'){
+
+                //发异步把用户状态进行更改
+                $(obj).attr('title','停用')
+                $(obj).find('i').html('&#xe62f;');
+
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                layer.msg('已停用!',{icon: 5,time:1000});
+
+              }else{
+                $(obj).attr('title','启用')
+                $(obj).find('i').html('&#xe601;');
+
+                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                layer.msg('已启用!',{icon: 5,time:1000});
+              }
+              
+          });
+      }
 
       /*用户-删除*/
       function member_del(obj,id){
@@ -154,9 +169,9 @@
 
         var data = tableCheck.getData();
   
-        layer.confirm('确认要恢复吗？'+data,function(index){
+        layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
-            layer.msg('恢复成功', {icon: 1});
+            layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
