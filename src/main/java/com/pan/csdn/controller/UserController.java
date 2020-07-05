@@ -80,6 +80,7 @@ public class UserController {
         mv.setViewName("user_list");
         return mv;
     }
+
     @RequestMapping("/toUAdd")
     public ModelAndView toUAdd()
     {
