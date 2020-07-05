@@ -24,69 +24,49 @@
     <div class="x-body layui-anim layui-anim-up">
         <form class="layui-form">
           <div class="layui-form-item">
-              <label for="L_uname" class="layui-form-label">
-                  <span class="x-red">*</span>用户名
+              <label for="L_title" class="layui-form-label">标题
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_uname" name="uname" required="" lay-verify="uname"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>将会成为您唯一的登入名
-              </div>
-          </div>
-
-          <div class="layui-form-item">
-              <label for="L_upass" class="layui-form-label">
-                  <span class="x-red">*</span>密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_upass" name="upass" required="" lay-verify="upass"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  6到16个字符
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>确认密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
+                  <input type="text" id="L_title" name="title" required="" lay-verify="title"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
 
+          <div class="layui-form-item">
+              <label for="L_comment" class="layui-form-label">评论
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_comment" name="comment" required="" lay-verify="comment"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
             <div class="layui-form-item">
-                <label for="L_headpic" class="layui-form-label">
-                    上传头像
+                <label for="L_browse" class="layui-form-label">浏览
                 </label>
                 <div class="layui-input-inline">
-                    <button type="button" class="layui-btn" id="test1">
-                        <i class="layui-icon">&#xe67c;</i>上传图片
-                    </button>
-                    <img id="img_headpic" src="/images/default.jpg" width="100px" height="100px">
-                    <input type="hidden" id="headpic" name="headpic" value="default.jpg"/>
+                    <input type="text" id="L_browse" name="browse" required="" lay-verify="browse"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label  class="layui-form-label">权限</label>
-                <div class="layui-input-block">
-                   <input type="checkbox" name="role[admin]" title="管理员">
-                   <input type="checkbox" name="role[student]" title="学生">
-                   <input type="checkbox" name="role[teacher]" title="教师">
-
+                <label for="L_userid" class="layui-form-label">作者ID
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_userid" name="userid" required="" lay-verify="userid"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label  class="layui-form-label">详情</label>
-                <div class="layui-input-block">
-                    <textarea id="demo" name="demo" style="display: none;"></textarea>
+                <label for="L_releasetime" class="layui-form-label">发布时间
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_releasetime" name="releasetime" required="" lay-verify="releasetime"
+                           autocomplete="off" class="layui-input">
                 </div>
             </div>
+
 
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
@@ -112,32 +92,13 @@
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
-        
-          //自定义验证规则
-          form.verify({
-            uname: function(value){
-              if(value.length < 5){
-                return '账号至少得5个字符啊';
-              }
-            }
-            ,upass: [/(.+){6,12}$/, '密码必须6到12位']
-            ,repass: function(value){
-                if($('#L_upass').val()!=$('#L_repass').val()){
-                    return '两次密码不一致';
-                }
-            }
-          });
+
 
           //监听提交
           form.on('submit(add)', function(data){
-              console.log(layedit.getText(layui_index));
-              console.log(layedit.getContent(layui_index));
-              console.log("data"+data);
-              data.field.scontent = layedit.getContent(layui_index);
-
             console.log(JSON.stringify(data.field));
             $.ajax({
-                url:"/admin/uadd",
+                url:"/article/artadd",
                 dataType:"json",
                 data:data.field,
                 success:function (data) {

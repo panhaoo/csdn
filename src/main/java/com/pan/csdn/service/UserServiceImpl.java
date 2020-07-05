@@ -56,12 +56,12 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
-    public int updateById(User user) {
+    public int update(User user) {
         return userMapper.updateById(user);
     }
 
     @Override
-    public int deleteById(Integer id) {
+    public int delete(Integer id) {
         return userMapper.deleteById(id);
     }
 

@@ -115,7 +115,7 @@
               console.log(JSON.stringify(data.field));
               //Ajax提交数据
               $.ajax({
-                  url:"/user/edit",
+                  url:"/admin/edit",
                   dataType:"json",
                   data:data.field,
                   success:function (data) {
@@ -149,7 +149,7 @@
             //执行实例
             var uploadInst = upload.render({
                 elem: '#test1' //绑定元素
-                ,url: '/user/uploadHeadPic' //上传接口
+                ,url: '/admin/uploadHeadPic' //上传接口
                 ,done: function(res){
                     //上传完毕回调
                     layer.msg("上传成功");

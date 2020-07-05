@@ -132,12 +132,12 @@
           form.on('submit(add)', function(data){
               console.log(layedit.getText(layui_index));
               console.log(layedit.getContent(layui_index));
-              console.log(data);
+              console.log("data"+data);
               data.field.scontent = layedit.getContent(layui_index);
 
             console.log(JSON.stringify(data.field));
             $.ajax({
-                url:"/user/uadd",
+                url:"/admin/uadd",
                 dataType:"json",
                 data:data.field,
                 success:function (data) {
@@ -167,7 +167,7 @@
             //执行实例
             var uploadInst = upload.render({
                 elem: '#test1' //绑定元素
-                ,url: '/user/uploadHeadPic' //上传接口
+                ,url: '/admin/uploadHeadPic' //上传接口
                 ,done: function(res){
                     //上传完毕回调
                     layer.msg("上传成功");
@@ -182,6 +182,7 @@
             });
         });
     </script>
+
 
 
   </body>

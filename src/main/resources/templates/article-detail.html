@@ -28,29 +28,56 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="L_id" name="id" required="" lay-verify="id"
-                       autocomplete="off" class="layui-input" th:value="${user.id}">
+                       autocomplete="off" class="layui-input" th:value="${article.id}">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label for="L_uname" class="layui-form-label">
-                <span class="x-red"></span>用户名
+            <label for="L_title" class="layui-form-label">
+                <span class="x-red"></span>标题
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_uname" name="uname" required="" lay-verify="uname"
-                       autocomplete="off" class="layui-input" th:value="${user.uname}">
+                <input type="text" id="L_title" name="title" required="" lay-verify="title"
+                       autocomplete="off" class="layui-input" th:value="${article.title}">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label for="L_upass" class="layui-form-label">
-                <span class="x-red"></span>密码
+            <label for="L_comment" class="layui-form-label">
+                <span class="x-red"></span>评论
             </label>
             <div class="layui-input-inline">
-                <input type="password" id="L_upass" name="upass" required="" lay-verify="upass"
-                       autocomplete="off" class="layui-input" th:value="${user.upass}">
+                <input type="text"  id="L_comment" name="comment" required="" lay-verify="comment"
+                       autocomplete="off" class="layui-input" th:value="${article.comment}">
             </div>
         </div>
+    <div class="layui-form-item">
+        <label for="L_browse" class="layui-form-label">
+            <span class="x-red"></span>浏览
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="L_browse" name="browse" required="" lay-verify="browse"
+                   autocomplete="off" class="layui-input" th:value="${article.browse}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="L_userid" class="layui-form-label">
+            <span class="x-red"></span>作者ID
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="L_userid" name="userid" required="" lay-verify="userid"
+                   autocomplete="off" class="layui-input" th:value="${article.userid}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="L_releasetime" class="layui-form-label">
+            <span class="x-red"></span>发布时间
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="L_releasetime" name="releasetime" required="" lay-verify="releasetime"
+                   autocomplete="off" class="layui-input" th:value="${article.releasetime}">
+        </div>
+    </div>
 </div>
 
 </body>

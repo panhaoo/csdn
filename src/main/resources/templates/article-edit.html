@@ -21,92 +21,72 @@
 </head>
   
   <body>
-    <div class="x-body">
-        <form class="layui-form">
-            <input name="id" type="hidden" th:value="${user.id}">
-            <div class="layui-form-item">
-                <label for="L_uname" class="layui-form-label">
-                    <span class="x-red">*</span>用户名
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" id="L_uname" name="uname" required="" lay-verify="uname"
-                           autocomplete="off" class="layui-input" th:value="${user.uname}">
-                </div>
-                <div class="layui-form-mid layui-word-aux">
-                    <span class="x-red">*</span>将会成为您唯一的登入名
-                </div>
-            </div>
-
-
-            <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>密码
+  <div class="x-body layui-anim layui-anim-up">
+      <form class="layui-form">
+          <div class="layui-form-item">
+              <label for="L_title" class="layui-form-label">标题
               </label>
               <div class="layui-input-inline">
-                  <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
-                  autocomplete="off" class="layui-input">
+                  <input type="text" id="L_title" name="title" required="" lay-verify="title"
+                         autocomplete="off" class="layui-input" th:value="${article.title}">
               </div>
-              <div class="layui-form-mid layui-word-aux">
-                  6到16个字符
+          </div>
+
+
+          <div class="layui-form-item">
+              <label for="L_comment" class="layui-form-label">评论
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_comment" name="comment" required="" lay-verify="comment"
+                         autocomplete="off" class="layui-input" th:value="${article.comment}">
               </div>
           </div>
           <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>确认密码
+              <label for="L_browse" class="layui-form-label">浏览
               </label>
               <div class="layui-input-inline">
-                  <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
-                  autocomplete="off" class="layui-input">
+                  <input type="text" id="L_browse" name="browse" required="" lay-verify="browse"
+                         autocomplete="off" class="layui-input" th:value="${article.browse}">
               </div>
           </div>
 
-            <div class="layui-form-item">
-                <label for="L_headpic" class="layui-form-label">
-                    上传头像
-                </label>
-                <div class="layui-input-inline">
-                    <button type="button" class="layui-btn" id="test1">
-                        <i class="layui-icon">&#xe67c;</i>上传图片
-                    </button>
-                    <img id="img_headpic" th:src="@{${url}}" width="100px" height="100px">
-                    <input type="hidden" id="headpic" name="headpic" th:src="${user.headpic}"/>
-                </div>
-            </div>
+          <div class="layui-form-item">
+              <label for="L_userid" class="layui-form-label">作者ID
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_userid" name="userid" required="" lay-verify="userid"
+                         autocomplete="off" class="layui-input" th:value="${article.userid}">
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="L_releasetime" class="layui-form-label">发布时间
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="L_releasetime" name="releasetime" required="" lay-verify="releasetime"
+                         autocomplete="off" class="layui-input" th:value="${article.releasetime}">
+              </div>
+          </div>
 
 
-            <div class="layui-form-item">
-                <label class="layui-form-label" lay-filter="edit" lay-submit="">
-                </label>
-                <button  class="layui-btn" lay-filter="edit" lay-submit="">
-                    修改
-                </button>
-                <button  type="button" class="layui-btn layui-btn-danger">
-                    重置
-                </button>
-            </div>
-
-        </form>
-    </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label" lay-filter="edit" lay-submit="">
+              </label>
+              <button  class="layui-btn" lay-filter="edit" lay-submit="">
+                  修改
+              </button>
+              <button  type="button" class="layui-btn layui-btn-danger">
+                  重置
+              </button>
+          </div>
+      </form>
+  </div>
     <script>
       layui.use(['form','layer'], function(){
           $ = layui.jquery;
         var form = layui.form
         ,layer = layui.layer;
-      
-        //自定义验证规则
-        form.verify({
-          nikename: function(value){
-            if(value.length < 5){
-              return '昵称至少得5个字符啊';
-            }
-          }
-          ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-          ,repass: function(value){
-              if($('#L_pass').val()!=$('#L_repass').val()){
-                  return '两次密码不一致';
-              }
-          }
-        });
+
 
         //监听提交
 //监听提交
@@ -115,7 +95,7 @@
               console.log(JSON.stringify(data.field));
               //Ajax提交数据
               $.ajax({
-                  url:"/admin/edit",
+                  url:"/article/edit",
                   dataType:"json",
                   data:data.field,
                   success:function (data) {
@@ -142,28 +122,6 @@
         
       });
   </script>
-    <script>
-        layui.use('upload', function(){
-            var upload = layui.upload;
-
-            //执行实例
-            var uploadInst = upload.render({
-                elem: '#test1' //绑定元素
-                ,url: '/admin/uploadHeadPic' //上传接口
-                ,done: function(res){
-                    //上传完毕回调
-                    layer.msg("上传成功");
-                    var headpic=res.data.src;
-                    $("#img_headpic").attr("src","/user/"+headpic);
-                    $("#headpic").val(headpic);
-                }
-                ,error: function(){
-                    //请求异常回调
-                    layer.msg("上传失败");
-                }
-            });
-        });
-    </script>
 
 
   </body>

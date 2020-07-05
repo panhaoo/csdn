@@ -1,10 +1,10 @@
-package com.dfrz.demo.bean;
+package com.pan.csdn.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-@TableName("t_article")
+@TableName("article")
 public class Article {
         //主键
         @TableId(value = "id",type = IdType.AUTO)
@@ -12,48 +12,85 @@ public class Article {
         //标题
         private String title;
         //内容
-        private String scontent;
+        private Integer comment;
 
-    public Article() {
-    }
+        private Integer browse;
 
-    public Article(Integer id, String title, String scontent) {
-        this.id = id;
-        this.title = title;
-        this.scontent = scontent;
-    }
+        private Integer userid;
 
-    public Integer getId() {
-        return id;
-    }
+        private String releasetime;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+        public Article(){
 
-    public String getTitle() {
-        return title;
-    }
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public Article(Integer id, String title, Integer comment, Integer browse, Integer userid, String releasetime) {
+            this.id = id;
+            this.title = title;
+            this.comment = comment;
+            this.browse = browse;
+            this.userid = userid;
+            this.releasetime = releasetime;
+        }
 
-    public String getScontent() {
-        return scontent;
-    }
+        public Integer getId() {
+            return id;
+        }
 
-    public void setScontent(String scontent) {
-        this.scontent = scontent;
-    }
+        public void setId(Integer id) {
+            this.id = id;
+        }
 
-    @Override
-    public String toString(){
-        return "User{"+
-                "id: "+id+
-                ", 标题: "+title+
-                ",内容: "+scontent+
-                "}";
-    }
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public Integer getComment() {
+            return comment;
+        }
+
+        public void setComment(Integer comment) {
+            this.comment = comment;
+        }
+
+        public Integer getBrowse() {
+            return browse;
+        }
+
+        public void setBrowse(Integer browse) {
+            this.browse = browse;
+        }
+
+        public Integer getUserid() {
+            return userid;
+        }
+
+        public void setUserid(Integer userid) {
+            this.userid = userid;
+        }
+
+        public String getReleasetime() {
+            return releasetime;
+        }
+
+        public void setReleasetime(String releasetime) {
+            this.releasetime = releasetime;
+        }
+
+        @Override
+            public String toString(){
+                return "User{"+
+                        "id: "+id+
+                        ", 标题: "+title+
+                        ",评论: "+comment+
+                        ",浏览: "+browse+
+                        ",作者id: "+userid+
+                        ",发布时间: "+releasetime+
+                        "}";
+            }
 }
 

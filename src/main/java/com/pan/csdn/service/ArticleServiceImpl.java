@@ -1,7 +1,7 @@
-package com.dfrz.demo.service;
+package com.pan.csdn.service;
 
-import com.dfrz.demo.bean.Article;
-import com.dfrz.demo.mapper.ArticleMapper;
+import com.pan.csdn.bean.Article;
+import com.pan.csdn.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,28 @@ public class ArticleServiceImpl implements IArticleService{
     ArticleMapper articleMapper;
 
     @Override
+    public void addArticle(Article article) {
+        articleMapper.insert(article);
+    }
+
+    @Override
     public List<Article> getArticles() {
         return articleMapper.selectList(null);
+    }
+
+    @Override
+    public Article getArticleById(Integer id) {
+        Article article = articleMapper.selectById(id);
+        return article;
+    }
+
+    @Override
+    public int update(Article article) {
+        return articleMapper.updateById(article);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return articleMapper.deleteById(id);
     }
 }
