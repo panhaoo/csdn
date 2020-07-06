@@ -6,6 +6,7 @@ import com.pan.csdn.bean.Articles;
 import com.pan.csdn.bean.Category;
 import com.pan.csdn.service.IArticleService;
 import com.pan.csdn.service.ICategoryService;
+import com.pan.csdn.service.IUserService;
 import com.pan.csdn.utils.Result;
 import com.pan.csdn.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,12 @@ public class PortalController {
 
     @Autowired
     IArticleService articleService;
+
+    @Autowired
+    IUserService userService;
+
     @RequestMapping("/toArticle")
     public ModelAndView toArticle(){
-
         ModelAndView mv = new ModelAndView();
         mv.setViewName("article_list");
         return mv;
@@ -257,6 +261,16 @@ public class PortalController {
         modelAndView.addObject("articles",articles);
         modelAndView.addObject("categoryname",categoryname);
         modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
+    @RequestMapping("/content/{articleid}")
+    public ModelAndView toArticleContent(@PathVariable int articleid){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("article_content");
+        Article article = articleService.getArticleById(articleid);
+        User user = userService.getUserById(article.getUserid());
+        modelAndView.addObject("article",article);
+        modelAndView.addObject("user",user);
         return modelAndView;
     }
 }
