@@ -37,4 +37,14 @@ public class ArticleServiceImpl implements IArticleService{
     public int delete(Integer id) {
         return articleMapper.deleteById(id);
     }
+
+    @Override
+    public int deleteBatchIds(List<Integer> list) {
+        return articleMapper.deleteBatchIds(list);
+    }
+
+    @Override
+    public int getArtsCount() {
+        return articleMapper.selectCount(null);
+    }
 }

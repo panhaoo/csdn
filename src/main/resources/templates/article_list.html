@@ -33,30 +33,22 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form id="sreach" class="layui-form layui-col-md12 x-so"  lay-filter = "test1">
-          <input style="margin-left: 80%" type="text" name="searchid" required="" lay-verify="searchid"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-event="sreach" ><i class="layui-icon">&#xe615;</i></button>
+        <form class="layui-form layui-col-md12 x-so">
+          <input class="layui-input" placeholder="开始日" name="start" id="start">
+          <input class="layui-input" placeholder="截止日" name="end" id="end">
+          <span style="color:red"> &nbsp;&nbsp;/&nbsp;&nbsp; </span>
+          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button id="ids"  class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加知识文章','/article/toArtAdd',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span id="totalNum" class="x-right" style="line-height:40px"></span>
       </xblock>
       <table id="demo" class="layui-table" lay-filter = "test">
 
       </table>
-
-      <div class="page">
-        <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
-        </div>
-      </div>
 
     </div>
 
@@ -66,27 +58,93 @@
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
     </script>
+
+    <script>
+      layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+      });
+    </script>
     <script>
       layui.use('table',function () {
         var table = layui.table;
 
+        var table_data = new Array();  //table里的数据
+        var ids = new Array();  //选到的id
+
         table.render({
           elem:'#demo',
-          height:312,
+          height:390,
           url:'/article/getArticles',
-          page:true,
+          page: true, //开启分页
+          align: 'center',
           cols:[
             [//表头
-            {field:'id',title:'ID',width:80,sort:true,fixed:'left'},
-            {field:'title',title:'标题',width:200},
-            {field:'comment',title:'评论',width:130,sort:true},
-              {field:'browse',title:'浏览',width:130,sort:true},
-              {field:'userid',title:'作者ID',width:130,sort:true},
-              {field:'releasetime',title:'发布时间',width:200},
+            {type: 'checkbox'},
+            {field:'id',title:'ID',width:80,sort:true,align:'center'},
+            {field:'title',title:'标题',width:200,align:'center'},
+            {field:'comment',title:'评论',width:130,sort:true,align:'center'},
+              {field:'browse',title:'浏览',width:130,sort:true,align:'center'},
+              {field:'userid',title:'作者ID',width:130,sort:true,align:'center'},
+              {field:'releasetime',title:'发布时间',width:200,align:'center'},
               {field:'right',title:"操作",width:280,align:'center',toolbar:'#barDemo'}
 
             ]
           ]
+          ,done: function(res, curr, count) {
+            //如果是异步请求数据方式，res即为你接口返回的信息。
+            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+            //当前表格数据
+            console.log(res.data);
+            table_data = res.data;
+
+            //得到当前页码
+            console.log(curr);
+            //count = res.data.length;
+            //得到数据总量
+            console.log(count);
+            $('#totalNum').text("共有数据：" + count + " 条");
+          }
+          ,limits: [8,20]
+          ,limit: 8
+          ,parseData: function (res) {
+            var result;
+            console.log(this);
+            console.log(JSON.stringify(res));
+            if (this.page.curr) {
+              result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+            } else {
+              result = res.data.slice(0, this.limit);
+            }
+            return {"code": res.code, "msg": res.msg, "count": res.count, "data": result};
+          }
+        });
+        table.on('checkbox(test)', function(obj){
+
+          console.log(obj.checked); //当前是否选中状态
+          console.log(obj.data); //选中行的相关数据
+          console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：on
+          var checkStatus = table.checkStatus('demo'),
+                  data = checkStatus.data;
+          console.log(data);
+          console.log(checkStatus);
+          ids.splice(0);
+          for (var i = 0; i < data.length; i++) {    //循环筛选出id
+            ids.push(data[i].id);
+          }
+          console.log(ids);
+          $("#ids").val(ids);
+
         });
 
         table.on('tool(test)',function (obj) {
@@ -126,6 +184,45 @@
           }
         })
 
+      }
+      function delAll(obj) {
+        console.log($("#ids").val());
+        var ids = $("#ids").val();
+        var length = 0;
+        if(ids.length != 0){
+          console.log(ids);
+          for (var i = 0; i < ids.length; i++){
+            if (',' == ids[i]){
+              length++;
+            }
+          }
+          length=length+1;
+          console.log("长度："+length);
+          layer.confirm("确认删除"+length+"条用户信息?", function () {
+            deleteBatchIds(ids);
+            location.reload();
+            layer.close(layer.index);
+          });
+        }
+        else {
+          layer.confirm("未选中任何用户信息！");
+        }
+
+      }
+      /**
+       * 按多个id删除用户
+       * @param id
+       */
+      function deleteBatchIds(ids) {
+        //Restful模式 /user/doDeleteUsers/(ids)
+        $.ajax({
+          url: "/article/doDeleteArts/"+ids,
+          dataType: "json",
+          success: function (data) {
+            //layer.alert(data.msg);
+            layer.msg(data.msg, {icon: 1});
+          }
+        });
       }
 
 

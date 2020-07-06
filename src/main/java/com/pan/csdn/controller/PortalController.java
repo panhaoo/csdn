@@ -32,6 +32,16 @@ public class PortalController {
         result = ResultUtils.success(list);
         result.setCode(0);
         result.setMsg("查询成功");
+        result.setCount(list.size());
+        return result;
+    }
+
+    @RequestMapping("/getArtsCount")
+    public Result getArtsCount(){
+        int count = articleService.getArtsCount();
+        System.out.println("共有数据:【"+count+"】");
+        Result result = null;
+        result = ResultUtils.success(count);
         return result;
     }
     @RequestMapping("/toEdit/{id}")
@@ -86,17 +96,26 @@ public class PortalController {
         }
         return result;
     }
-
+    @RequestMapping("/doDeleteArtrs/{ids}")
+    //Restful路径传参(ids)模式
+    public Result doDeleteArts(@PathVariable List<Integer> ids){
+        Result result = null;
+        int data = articleService.deleteBatchIds(ids);
+        result = ResultUtils.success(data);
+        if (data > 0 ){
+            result.setMsg("删除成功");
+            System.out.println("删除"+data+"条文章信息");
+        }
+        else {
+            result.setMsg("删除失败");
+        }
+        return result;
+    }
     @RequestMapping("/edit")
     public Result edit(Article article){
         Result result=null;
         // 先获取原来对象的值
         Article a = articleService.getArticleById(article.getId());
-        System.out.println(article.getTitle());
-        System.out.println(article.getComment());
-        System.out.println(article.getBrowse());
-        System.out.println(article.getUserid());
-        System.out.println(article.getReleasetime());
 
         a.setTitle(article.getTitle());
         a.setComment(article.getComment());

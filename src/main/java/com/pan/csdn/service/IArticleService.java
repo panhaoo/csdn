@@ -11,5 +11,7 @@ public interface IArticleService {
     public Article getArticleById(Integer id);
     public int update(Article article);
     public int delete(Integer id);
+    public int deleteBatchIds(List<Integer> list);
+    public int getArtsCount();
 
 }
