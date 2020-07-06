@@ -24,6 +24,8 @@ public class User {
     private Date date;
     //头像
     private String headpic;
+    //标记 "y"存在  "n"删除
+    private String flag;
 
     public User() {
     }
@@ -75,6 +77,14 @@ public class User {
         this.headpic = headpic;
     }
 
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -83,16 +93,8 @@ public class User {
                 ", uname='" + uname + '\'' +
                 ", upass='" + upass + '\'' +
                 ", date=" + df.format(date) +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 
-/*    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", uname='" + uname + '\'' +
-                ", upass='" + upass + '\'' +
-                ", date=" + date +
-                '}';
-    }*/
 }

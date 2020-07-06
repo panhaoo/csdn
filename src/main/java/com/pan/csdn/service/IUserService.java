@@ -15,4 +15,6 @@ public interface IUserService {
     public int deleteBatchIds(List<Integer> list);
     public List<User> searchByUname(String searchUname);
     public List<User> searchByDate(List<String> list);
+    public List<User> searchByUname_Deleted(String searchUname);
+    public List<User> searchByDate_Deleted(List<String> list);
 }

@@ -7,5 +7,4 @@ import java.util.List;
 
 
 public interface UserMapper extends BaseMapper<User> {
-    public List<User> searchByDate();
 }

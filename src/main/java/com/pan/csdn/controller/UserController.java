@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,32 @@ public class UserController {
     @RequestMapping("/getUsers")
     public Result getUsers(){
         Result result = null;
-        List<User> list = userService.getUsers();
+        List<User> list1 = userService.getUsers();
+        List<User> list = new ArrayList<>();
+        for (int i = 0; i < list1.size(); i++){
+            if (list1.get(i).getFlag().equals("y")){
+                list.add(list1.get(i));
+            }
+        }
+        //list.forEach(System.out::println);
+        result = ResultUtils.success(list);
+        result.setCode(0);
+        result.setMsg("查询成功");
+        result.setCount(list.size());
+        return result;
+    }
+
+    @RequestMapping("/getUsersDeleted")
+    public Result getUsersDeleted(){
+        Result result = null;
+        List<User> list1 = userService.getUsers();
+        List<User> list = new ArrayList<>();
+        for (int i = 0; i < list1.size(); i++){
+            if (list1.get(i).getFlag().equals("n")){
+                list.add(list1.get(i));
+            }
+        }
+        //list.forEach(System.out::println);
         result = ResultUtils.success(list);
         result.setCode(0);
         result.setMsg("查询成功");
@@ -181,7 +207,8 @@ public class UserController {
         User user1 = userService.getUserById(user.getId());
         int data;
         if (user.getHeadpic() == user1.getHeadpic()){
-            data = userService.updateById(user1);
+            //data = userService.updateById(user1);
+            data = 0;
         }
         else {
             data = userService.updateById(user);
@@ -192,7 +219,46 @@ public class UserController {
             System.out.println("修改用户:【"+user.toString()+"】");
         }
         else {
-            result.setMsg("删除失败");
+            result.setMsg("修改失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/toEditUserpass/{id}")
+    public ModelAndView toEditUserpass(@PathVariable Integer id){
+        ModelAndView mv = new ModelAndView();
+        //设置视图
+        mv.setViewName("user-editpass");
+        User user = userService.getUserById(id);
+        //设置数据
+        mv.addObject("user",user);
+        //mv.addObject("url","/user/"+user.getHeadpic());
+        return mv;
+    }
+
+    @RequestMapping("/doEditUserPass")
+    public Result doEditUserpass(Integer id , String upass){
+        Result result = null;
+        System.out.println(id);
+        System.out.println(upass);
+        User user1 = userService.getUserById(id);
+        User user = user1;
+        int data;
+        if (upass == user1.getUpass()){
+            //data = userService.updateById(user1);
+            data = 0;
+        }
+        else {
+            user.setUpass(upass);
+            data = userService.updateById(user);
+        }
+        result = ResultUtils.success(data);
+        if (data > 0 ){
+            result.setMsg("修改成功");
+            System.out.println("修改用户:【"+user.toString()+"】");
+        }
+        else {
+            result.setMsg("修改失败");
         }
         return result;
     }
@@ -200,6 +266,24 @@ public class UserController {
     @RequestMapping("/doDeleteUser/{id}")
     //Restful路径传参(id)模式
     public Result doDeleteUser(@PathVariable Integer id){
+        Result result = null;
+        User user = userService.getUserById(id);
+        user.setFlag("n");
+        int data = userService.updateById(user);
+        result = ResultUtils.success(data);
+        if (data > 0){
+            result.setMsg("删除成功");
+            System.out.println("删除用户:【"+user.toString()+"】");
+        }
+        else {
+            result.setMsg("删除失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/doDeleteUser_Deleted/{id}")
+    //Restful路径传参(id)模式
+    public Result doDeleteUser_Deleted(@PathVariable Integer id){
         Result result = null;
         User user = userService.getUserById(id);
         int data = userService.deleteById(id);
@@ -217,6 +301,29 @@ public class UserController {
     @RequestMapping("/doDeleteUsers/{ids}")
     //Restful路径传参(ids)模式
     public Result doDeleteUsers(@PathVariable List<Integer> ids){
+        Result result = null;
+        //int data = userService.deleteBatchIds(ids);
+        int data = 0;
+        for (Integer i: ids
+             ) {
+            User user = userService.getUserById(i);
+            user.setFlag("n");
+            data += userService.updateById(user);
+        }
+        result = ResultUtils.success(data);
+        if (data > 0 ){
+            result.setMsg("删除成功");
+            System.out.println("删除"+data+"条用户信息");
+        }
+        else {
+            result.setMsg("删除失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/doDeleteUsers_Deleted/{ids}")
+    //Restful路径传参(ids)模式
+    public Result doDeleteUsers_Deleted(@PathVariable List<Integer> ids){
         Result result = null;
         int data = userService.deleteBatchIds(ids);
         result = ResultUtils.success(data);
@@ -289,4 +396,40 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping("/searchByUname_Deleted/{seachUname}")
+    //Restful路径传参(id)模式
+    public Result searchByUname_Deleted(@PathVariable String seachUname){
+        Result result = null;
+        List<User> list = userService.searchByUname_Deleted(seachUname);
+        result = ResultUtils.success(list);
+        result.setData(list);
+        result.setCode(0);
+        result.setMsg("查询成功");
+        result.setCount(list.size());
+        return result;
+    }
+
+    @RequestMapping("/searchByDate_Deleted/{dates}")
+    public Result searchByDate_Deleted(@PathVariable List<String> dates){
+        Result result = null;
+        List<User> list = userService.searchByDate_Deleted(dates);
+        result = ResultUtils.success(list);
+        result.setData(list);
+        result.setCode(0);
+        result.setMsg("查询成功");
+        result.setCount(list.size());
+        return result;
+    }
+
+    /**
+     * 进入用户删除页面
+     * ModelAndView 是Springmvc返回 是一个模型加视图 结构
+     */
+    @RequestMapping("/toDeleted")
+    public ModelAndView toDeleted(){
+        ModelAndView mv = new ModelAndView();
+        //设置视图
+        mv.setViewName("user-delete");
+        return mv;
+    }
 }

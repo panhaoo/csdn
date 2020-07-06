@@ -76,9 +76,41 @@ public class UserServiceImpl implements IUserService{
     @Override
     public List<User> searchByUname(String searchUname) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        QueryWrapper<User> wrapper = queryWrapper.like("uname",searchUname);
+        QueryWrapper<User> wrapper = queryWrapper.like("uname",searchUname).eq("flag","y");
         List<User> list = userMapper.selectList(wrapper);
         return list;
+    }
+
+    @Override
+    public List<User> searchByUname_Deleted(String searchUname) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper = queryWrapper.like("uname",searchUname).eq("flag","n");
+        List<User> list = userMapper.selectList(wrapper);
+        return list;
+    }
+
+    @Override
+    public List<User> searchByDate_Deleted(List<String> list) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        List<User> list1 = null;
+        String start = list.get(0);
+        String end = list.get(1);
+        System.out.println("start:"+start);
+        System.out.println("end:"+end);
+        //>=ge  <= le
+        if(!start.isEmpty() && !end.isEmpty()){
+            QueryWrapper<User> wrapper1 = queryWrapper.ge("date",start).le("date",end).eq("flag","n");
+            list1 = userMapper.selectList(wrapper1);
+        }
+        else if(!start.isEmpty() && end.isEmpty()) {
+            QueryWrapper<User> wrapper2 = queryWrapper.ge("date",start).eq("flag","n");
+            list1 = userMapper.selectList(wrapper2);
+        }
+        else if(start.isEmpty() && !end.isEmpty()){
+            QueryWrapper<User> wrapper3 = queryWrapper.le("date",end).eq("flag","n");
+            list1 = userMapper.selectList(wrapper3);
+        }
+        return list1;
     }
 
     @Override
@@ -91,15 +123,15 @@ public class UserServiceImpl implements IUserService{
         System.out.println("end:"+end);
         //>=ge  <= le
         if(!start.isEmpty() && !end.isEmpty()){
-            QueryWrapper<User> wrapper1 = queryWrapper.ge("date",start).le("date",end);
+            QueryWrapper<User> wrapper1 = queryWrapper.ge("date",start).le("date",end).eq("flag","y");
             list1 = userMapper.selectList(wrapper1);
         }
         else if(!start.isEmpty() && end.isEmpty()) {
-            QueryWrapper<User> wrapper2 = queryWrapper.ge("date",start);
+            QueryWrapper<User> wrapper2 = queryWrapper.ge("date",start).eq("flag","y");
             list1 = userMapper.selectList(wrapper2);
         }
         else if(start.isEmpty() && !end.isEmpty()){
-            QueryWrapper<User> wrapper3 = queryWrapper.le("date",end);
+            QueryWrapper<User> wrapper3 = queryWrapper.le("date",end).eq("flag","y");
             list1 = userMapper.selectList(wrapper3);
         }
         return list1;

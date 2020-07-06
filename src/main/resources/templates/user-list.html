@@ -55,6 +55,7 @@
   <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="editpass">修改密码</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
 
@@ -91,7 +92,7 @@
             ,height: 389
             ,url: "/user/searchByUname/"+uname //数据接口
             ,page: true //开启分页
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+            ,cellMinWidth: 70 //全局定义常规单元格的最小宽度
             ,align: 'center'
             ,cols: [
               [ //表头
@@ -106,7 +107,7 @@
                   return "<button type=\"button\" onclick=\"member_stop(this,'10001')\" class=\"layui-btn layui-btn-sm layui-btn-danger\">禁用</button>";
                 }
               }
-                ,{align:'center', toolbar: '#barDemo'}
+                ,{title:'操作',align:'center', width: 400 ,toolbar: '#barDemo'}
 
               ]
             ]
@@ -154,7 +155,7 @@
             ,height: 389
             ,url: "/user/searchByDate/"+list //数据接口
             ,page: true //开启分页
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+            ,cellMinWidth: 70 //全局定义常规单元格的最小宽度
             ,align: 'center'
             ,cols: [
               [ //表头
@@ -169,7 +170,7 @@
                   return "<button type=\"button\" onclick=\"member_stop(this,'10001')\" class=\"layui-btn layui-btn-sm layui-btn-danger\">禁用</button>";
                 }
               }
-                ,{align:'center', toolbar: '#barDemo'}
+                ,{title:'操作', width: 400 ,align:'center', toolbar: '#barDemo'}
 
               ]
             ]
@@ -204,7 +205,7 @@
 
           });
 
-          console.log("333");
+          //console.log("333");
         }
 
         return false;
@@ -270,7 +271,7 @@
         ,height: 389
         ,url: '/user/getUsers' //数据接口
         ,page: true //开启分页
-        ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+        ,cellMinWidth: 70 //全局定义常规单元格的最小宽度
         ,align: 'center'
         ,cols: [
                 [ //表头
@@ -285,7 +286,7 @@
                     return "<button type=\"button\" onclick=\"member_stop(this,'10001')\" class=\"layui-btn layui-btn-sm layui-btn-danger\">禁用</button>";
                   }
                 }
-          ,{align:'center', toolbar: '#barDemo'}
+          ,{title:'操作', width: 400, align:'center', toolbar: '#barDemo'}
 
         ]
         ]
@@ -321,76 +322,19 @@
 
       });
 
-      /*var $ = layui.$, active = {
-        reload: function(){
-          var demoReload = $('#seachUname');
-          console.log(demoReload);
-          console.log(demoReload.val());
-
-          //执行重载
-          table.reload('testReload', {
-            page: {
-              curr: 1 //重新从第 1 页开始
-            }
-            ,where: {
-              key: {
-                uname: demoReload.val()
-              }
-            }
-          }, 'data');
-        }
-      };
-
-      $('.demoTable .layui-btn').on('click', function(){
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
-      });*/
-
     table.on('checkbox(test)', function(obj){
 
         console.log(obj.checked); //当前是否选中状态
         console.log(obj.data); //选中行的相关数据
         console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：on
-        var checkStatus = table.checkStatus('demo'),
-                data = checkStatus.data;
+       // var checkStatus = table.checkStatus('demo'),
+        var data = layui.table.checkStatus('testReload').data;
         console.log(data);
-        console.log(checkStatus);
+        //console.log(checkStatus);
         ids.splice(0);
         for (var i = 0; i < data.length; i++) {    //循环筛选出id
           ids.push(data[i].id);
         }
-        /*//取选中的id
-        if(obj.checked==true){   //选择
-
-          if(obj.type=='one'){  //选择 且只选一行
-            ids.push(obj.data.id);
-          }else{  //选择 且全选
-            for(var i=0;i<table_data.length;i++){
-              ids.push(table_data[i].id);
-            }
-          }
-
-        }else{  //取消选择
-
-          if(obj.type=='one'){  //取消 且只取消一行
-            for(var i=0;i<ids.length;i++){
-              if(ids[i]==obj.data.id){
-                ids.splice(i,1);
-              }
-            }
-          }else{  //取消 且取消全部
-            ids.splice(0);
-          }
-        }
-
-        if (ids != null){   //消重复
-          ids.sort();
-          for (var i = 0; i < ids.length; i++) {
-            if (ids[i] === ids[i + 1]) {
-              ids.splice(i, 1);
-            }
-          }
-        }*/
         console.log(ids);
         $("#ids").val(ids);
 
@@ -407,10 +351,14 @@
           case 'edit':
             x_admin_show('编辑用户', '/user/toEditUser/'+data.id, 600, 450);
             break;
+          case 'editpass':
+            x_admin_show('修改密码', '/user/toEditUserpass/'+data.id, 600, 450);
+            break;
           case 'del':
             layer.confirm("确认删除用户 "+data.uname+" ?", function () {
                   delectUserById(data.id);
-                  obj.del();
+                  //obj.del();
+                  location.reload();
                   layer.close(layer.index);
             });
             break;
