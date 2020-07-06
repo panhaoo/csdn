@@ -6,7 +6,6 @@
         <id column="id" property="id"></id>
         <!--普通字段-->
         <result column="title" property="title"></result>
-        <result column="category" property="category"></result>
         <result column="comment" property="comment"></result>
         <result column="cover" property="cover"></result>
         <result column="scontent" property="scontent"></result>
@@ -18,5 +17,8 @@
         select article.*,user.uname from article,user
         where article.userid = user.id
     </select>
-
+    <!--定义查询-->
+    <select id="getArticleById" parameterType="Integer" resultMap="ArticleResultMapper">
+        select title, comment, browse,userid,releasetime from article where id=#{id}
+    </select>
 </mapper>

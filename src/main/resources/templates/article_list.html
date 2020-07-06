@@ -23,10 +23,8 @@
   <body class="layui-anim layui-anim-up">
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
-        <a>
-          <cite>导航元素</cite></a>
+       <a href="/user/toWelcome">首页</a>
+        <a><cite>文章列表</cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -37,8 +35,8 @@
           <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end">
           <span style="color:red"> &nbsp;&nbsp;/&nbsp;&nbsp; </span>
-          <input type="text" name="id"  id="artid" placeholder="请输入文章编号" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  id="search"><i class="layui-icon">&#xe615;</i></button>
+          <input type="text" name="artTitle"  id="artTitle" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+          <button class="layui-btn" lay-submit=""  id="sreach" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
@@ -58,7 +56,150 @@
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
     </script>
+    <script>
+      layui.use(['form','layer','table','laydate'], function(){
+        $ = layui.jquery;
+        var form = layui.form,
+                table = layui.table,
+                laydate = layui.laydate;
 
+        //监听提交
+        form.on('submit(sreach)', function(data){
+          console.log(data);
+          console.log(JSON.stringify(data.field));
+          var data = data.field;
+          console.log(data.start);
+          console.log(data.end);
+          console.log(data.artTitle);
+          if (!data.artTitle&& !data.start && !data.end){  //无条件，重载表格
+            table.render.reload({
+              elem: '#testReload'
+            });
+          }
+          else if(data.artTitle){   //有姓名，按姓名搜索
+
+            //发异步，把数据提交给php  //ajax
+            var artTitle = data.artTitle;
+            console.log("artTitle:"+artTitle);
+
+            //第一个实例
+            table.render({
+              elem: '#demo'
+              ,id: 'testReload'
+              ,height: 410
+              ,url: "/article/searchByTitle/"+artTitle //数据接口
+              ,page: true //开启分页
+              ,align: 'center'
+              ,cols:[
+                [//表头
+                  {type: 'checkbox'},
+                  {field:'id',title:'ID',width:80,sort:true,align:'center'},
+                  {field:'title',title:'标题',width:200,align:'center'},
+                  {field:'comment',title:'评论',width:130,sort:true,align:'center'},
+                  {field:'browse',title:'浏览',width:130,sort:true,align:'center'},
+                  {field:'userid',title:'作者ID',width:130,sort:true,align:'center'},
+                  {field:'releasetime',title:'发布时间',width:200,align:'center'},
+                  {field:'right',title:"操作",width:280,align:'center',toolbar:'#barDemo'}
+
+                ]
+              ]
+              ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+                //当前表格数据
+                console.log(res.data);
+
+                //得到当前页码
+                console.log(curr);
+                //count = res.data.length;
+                //得到数据总量
+                console.log(count);
+                $('#totalNum').text("共有数据："+count+" 条");
+              }
+
+              ,limits: [8,20]
+              ,limit: 8
+              ,parseData: function (res) {
+                var result;
+                console.log(this);
+                console.log(JSON.stringify(res));
+                if (this.page.curr) {
+                  result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+                } else {
+                  result = res.data.slice(0, this.limit);
+                }
+                return {"code": res.code, "msg": res.msg, "count": res.count, "data": result};
+              }
+
+            });
+
+          }else if (data.start || data.end){  //有日期
+            console.log(data.start);
+            console.log(data.end);
+            var list = new Array(data.start,data.end);
+            console.log(list);
+
+            //第一个实例
+            table.render({
+              elem: '#demo'
+              ,id: 'testReload'
+              ,height: 410
+              ,url: "/article/searchByDate/"+list //数据接口
+              ,page: true //开启分页
+              ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+              ,align: 'center'
+              ,cols:[
+                [//表头
+                  {type: 'checkbox'},
+                  {field:'id',title:'ID',width:80,sort:true,align:'center'},
+                  {field:'title',title:'标题',width:200,align:'center'},
+                  {field:'comment',title:'评论',width:130,sort:true,align:'center'},
+                  {field:'browse',title:'浏览',width:130,sort:true,align:'center'},
+                  {field:'userid',title:'作者ID',width:130,sort:true,align:'center'},
+                  {field:'releasetime',title:'发布时间',width:200,align:'center'},
+                  {field:'right',title:"操作",width:280,align:'center',toolbar:'#barDemo'}
+
+                ]
+              ]
+              ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+                //当前表格数据
+                console.log(res.data);
+
+                //得到当前页码
+                console.log(curr);
+                //count = res.data.length;
+                //得到数据总量
+                console.log(count);
+                $('#totalNum').text("共有数据："+count+" 条");
+              }
+
+              ,limits: [8,20]
+              ,limit: 8
+              ,parseData: function (res) {
+                var result;
+                console.log(this);
+                console.log(JSON.stringify(res));
+                if (this.page.curr) {
+                  result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+                } else {
+                  result = res.data.slice(0, this.limit);
+                }
+                return {"code": res.code, "msg": res.msg, "count": res.count, "data": result};
+              }
+
+            });
+
+            console.log("333");
+          }
+
+          return false;
+        });
+      });
+    </script>
     <script>
       layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -83,7 +224,7 @@
 
         table.render({
           elem:'#demo',
-          height:390,
+          height:410,
           url:'/article/getArticles',
           page: true, //开启分页
           align: 'center',
@@ -157,6 +298,7 @@
               break;
             case 'edit':
               // layer.msg('编辑:[ id :'+data.id+']');
+                    console.log("data.id的值为"+data.id);
               x_admin_show('编辑Article知识文章','/article/toEdit/'+data.id,600,400);
               break;
             case 'del':
@@ -225,26 +367,6 @@
         });
       }
 
-        var oArtid = document.getElementById("artid");
-        var oSearch = document.getElementById("search")
-        var artvalue= $('#artid').val();
-        console.log("表格id的值为："+artid);
-      oSearch.onclick = function () {
-          // doSearch(artid);
-          x_admin_show('查看Article知识文章','/article/toDetail/'+artid,500,400);
-        }
-
-      function doSearch(id) {
-        //Restful模式 /article/doDeleteArts/"+ids
-        $.ajax({
-          url: "/article/toDetail/"+id,
-          dataType: "json",
-          success: function (data) {
-            //layer.alert(data.msg);
-            layer.msg(data.msg, {icon: 1});
-          }
-        });
-      }
     </script>
 
   </body>

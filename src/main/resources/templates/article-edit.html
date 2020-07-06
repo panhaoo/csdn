@@ -40,6 +40,8 @@
                   <input type="text" id="L_comment" name="comment" required="" lay-verify="comment"
                          autocomplete="off" class="layui-input" th:value="${article.comment}">
               </div>
+              <div class="layui-form-mid layui-word-aux">只能输入数字
+              </div>
           </div>
           <div class="layui-form-item">
               <label for="L_browse" class="layui-form-label">浏览
@@ -47,6 +49,8 @@
               <div class="layui-input-inline">
                   <input type="text" id="L_browse" name="browse" required="" lay-verify="browse"
                          autocomplete="off" class="layui-input" th:value="${article.browse}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">只能输入数字
               </div>
           </div>
 
@@ -66,23 +70,22 @@
                   <input type="text" id="L_releasetime" name="releasetime" required="" lay-verify="releasetime"
                          autocomplete="off" class="layui-input" th:value="${article.releasetime}">
               </div>
+              <div class="layui-form-mid layui-word-aux">yyyy-MM-dd
+              </div>
           </div>
 
 
           <div class="layui-form-item">
-              <label class="layui-form-label" lay-filter="edit" lay-submit="">
+              <label class="layui-form-label" >
               </label>
               <button  class="layui-btn" lay-filter="edit" lay-submit="">
                   修改
-              </button>
-              <button  type="button" class="layui-btn layui-btn-danger" id="reset">
-                  恢复
               </button>
           </div>
       </form>
   </div>
     <script>
-      layui.use(['form','layer'], function(){
+      layui.use(['form','layer'], function(data){
           $ = layui.jquery;
         var form = layui.form
         ,layer = layui.layer;
@@ -123,14 +126,52 @@
 
 
       });
-      var reset = document.getElementById("id");
-      reset.onclick = function (obj) {
 
-          var data = obj.data;
-        x_admin_show('查看Article知识文章','/article/toDetail/'+data.id,500,400);
-      }
   </script>
+  <script>
+      layui.use(['form','layer'], function(data){
+          $ = layui.jquery;
+          var form = layui.form
+              ,layer = layui.layer;
 
+          form.verify({
+              comment: [ /[0-9]$/, '评论数只能输入数字'],
+              browse: [ /[0-9]$/, '浏览数只能输入数字'],
+          });
+
+          //监听提交
+          form.on('submit(reset)', function(data){
+              //前端将对象转json字符串
+              console.log(JSON.stringify(data.field));
+              //Ajax提交数据
+              $.ajax({
+                  url:"/article/edit",
+                  dataType:"json",
+                  data:data.field,
+                  success:function (data) {
+                      if (data.code==0){
+                          layer.alert("修改成功", {icon: 6},function () {
+                              parent.location.reload();//修改成功后刷新父界面
+                              // 获得frame索引
+                              var index = parent.layer.getFrameIndex(window.name);
+                              //关闭当前frame
+                              parent.layer.close(index);
+                          });
+                      }
+                      else{
+                          layer.alert("修改失败");
+                      }
+
+                  }
+              });
+
+              return false;
+          });
+
+
+      });
+
+  </script>
 
   </body>
 

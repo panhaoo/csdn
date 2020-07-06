@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+
 @TableName("article")
 public class Article {
         //主键
@@ -12,7 +13,6 @@ public class Article {
         //标题
         private String title;
         //内容
-        private String category;
 
         private Integer comment;
 
@@ -30,10 +30,9 @@ public class Article {
 
         }
 
-        public Article(Integer id, String title, String category, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime) {
+        public Article(Integer id, String title, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime) {
             this.id = id;
             this.title = title;
-            this.category = category;
             this.comment = comment;
             this.cover = cover;
             this.scontent = scontent;
@@ -58,13 +57,6 @@ public class Article {
             this.title = title;
         }
 
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
 
         public Integer getComment() {
             return comment;
@@ -119,7 +111,6 @@ public class Article {
             return "Article{" +
                     "id=" + id +
                     ", title='" + title + '\'' +
-                    ", category='" + category + '\'' +
                     ", comment=" + comment +
                     ", cover='" + cover + '\'' +
                     ", scontent='" + scontent + '\'' +

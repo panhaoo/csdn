@@ -1,6 +1,7 @@
 package com.pan.csdn.controller;
 
 import com.pan.csdn.bean.Article;
+import com.pan.csdn.bean.User;
 import com.pan.csdn.service.IArticleService;
 import com.pan.csdn.utils.Result;
 import com.pan.csdn.utils.ResultUtils;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -54,6 +58,30 @@ public class PortalController {
         mv.addObject("article",article);
         return mv;
     }
+
+    @RequestMapping("/edit")
+    public Result Edit(Article article){
+        Result result=null;
+        // 先获取原来对象的值
+        System.out.println("修改的值articleid为"+article.getId());
+        Article a = articleService.getArticleById(article.getId());
+        a.setTitle(article.getTitle());
+        a.setComment(article.getComment());
+        a.setBrowse(article.getBrowse());
+        a.setUserid(article.getUserid());
+        a.setReleasetime(article.getReleasetime());
+        int data = articleService.update(a);
+        result=ResultUtils.success(data);
+        if(data>0){
+            result.setCode(0);
+            result.setMsg("更新成功");
+        }
+        else{
+            result.setMsg("更新失败");
+        }
+        return result;
+    }
+
     @RequestMapping("/toDetail/{id}")
     public ModelAndView toDetail(@PathVariable Integer id)
     {
@@ -72,7 +100,7 @@ public class PortalController {
     }
 
     @RequestMapping("/artadd")
-    public Result add(Article article){
+    public Result add(Article article) {
         System.out.println("添加数据["+article+"]");
         //用户数据添加至数据库
         articleService.addArticle(article);
@@ -111,28 +139,7 @@ public class PortalController {
         }
         return result;
     }
-    @RequestMapping("/edit")
-    public Result edit(Article article){
-        Result result=null;
-        // 先获取原来对象的值
-        Article a = articleService.getArticleById(article.getId());
 
-        a.setTitle(article.getTitle());
-        a.setComment(article.getComment());
-        a.setBrowse(article.getBrowse());
-        a.setUserid(article.getUserid());
-        a.setReleasetime(article.getReleasetime());
-        int data = articleService.update(a);
-        result=ResultUtils.success(data);
-        if(data>0){
-            result.setCode(0);
-            result.setMsg("更新成功");
-        }
-        else{
-            result.setMsg("更新失败");
-        }
-        return result;
-    }
     @RequestMapping("/portal_index")
     public ModelAndView toIndex(){
         ModelAndView modelAndView = new ModelAndView();
@@ -140,6 +147,20 @@ public class PortalController {
         List<Article> articles = articleService.getArticles();
         modelAndView.addObject("articles",articles);
         return modelAndView;
+    }
+
+    @RequestMapping("/searchByTitle/{title}")
+    //Restful路径传参(id)模式
+    public Result searchByTitle(@PathVariable String title){
+        Result result = null;
+        List<Article> list = articleService.searchByTitle(title);
+        System.out.println("list数据为"+list);
+        result = ResultUtils.success(list);
+        result.setData(list);
+        result.setCode(0);
+        result.setMsg("查询成功");
+        result.setCount(list.size());
+        return result;
     }
 
 }
