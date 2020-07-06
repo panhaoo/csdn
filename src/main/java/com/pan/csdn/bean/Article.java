@@ -29,8 +29,7 @@ public class Article {
         public Article(){
 
         }
-
-
+        
     public Article(Integer id, String title, Integer cid, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime) {
         this.id = id;
         this.title = title;
@@ -44,6 +43,7 @@ public class Article {
     }
 
     public Integer getId() {
+
             return id;
         }
 
@@ -65,6 +65,22 @@ public class Article {
 
         public void setComment(Integer comment) {
             this.comment = comment;
+        }
+
+        public String getCover() {
+            return cover;
+        }
+
+        public void setCover(String cover) {
+            this.cover = cover;
+        }
+
+        public String getScontent() {
+            return scontent;
+        }
+
+        public void setScontent(String scontent) {
+            this.scontent = scontent;
         }
 
         public Integer getBrowse() {
@@ -91,6 +107,7 @@ public class Article {
             this.releasetime = releasetime;
         }
 
+
         public Integer getCid() {
          return cid;
         }
@@ -99,21 +116,6 @@ public class Article {
             this.cid = cid;
         }
 
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public String getScontent() {
-        return scontent;
-    }
-
-    public void setScontent(String scontent) {
-        this.scontent = scontent;
-    }
 
 
     @Override

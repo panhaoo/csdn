@@ -37,8 +37,8 @@
           <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end">
           <span style="color:red"> &nbsp;&nbsp;/&nbsp;&nbsp; </span>
-          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          <input type="text" name="id"  id="artid" placeholder="请输入文章编号" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  id="search"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
@@ -214,7 +214,7 @@
        * @param id
        */
       function deleteBatchIds(ids) {
-        //Restful模式 /user/doDeleteUsers/(ids)
+        //Restful模式 /article/doDeleteArts/"+ids
         $.ajax({
           url: "/article/doDeleteArts/"+ids,
           dataType: "json",
@@ -225,7 +225,26 @@
         });
       }
 
+        var oArtid = document.getElementById("artid");
+        var oSearch = document.getElementById("search")
+        var artvalue= $('#artid').val();
+        console.log("表格id的值为："+artid);
+      oSearch.onclick = function () {
+          // doSearch(artid);
+          x_admin_show('查看Article知识文章','/article/toDetail/'+artid,500,400);
+        }
 
+      function doSearch(id) {
+        //Restful模式 /article/doDeleteArts/"+ids
+        $.ajax({
+          url: "/article/toDetail/"+id,
+          dataType: "json",
+          success: function (data) {
+            //layer.alert(data.msg);
+            layer.msg(data.msg, {icon: 1});
+          }
+        });
+      }
     </script>
 
   </body>

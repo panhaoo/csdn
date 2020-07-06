@@ -14,7 +14,6 @@
         <result column="browse" property="browse"></result>
         <result column="userid" property="userid"></result>
         <result column="releasetime" property="releasetime"></result>
-        <result column="uname" property="uname"></result>
     </resultMap>
     <select id="getArticles" resultMap="ArticleResultMapper">
         select article.*,category.category_name,user.uname from article,user,category

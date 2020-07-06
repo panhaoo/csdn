@@ -8,7 +8,10 @@
         <!--普通字段-->
         <result column="uname" property="uname"></result>
         <result column="upass" property="upass"></result>
+        <result column="date" property="upass"></result>
+        <result column="headpic" property="upass"></result>
     </resultMap>
+
     <!--定义查询-->
     <select id="getUserById" parameterType="Integer" resultMap="UserResultMap">
         select id, uname, upass from user where id=#{id}
