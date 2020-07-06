@@ -79,6 +79,14 @@ public class UserController {
         return mv;
     }
 
+    @RequestMapping("/toWelcome")
+    public ModelAndView toWelcome(){
+        System.out.println("加载欢迎界面");
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("user-welcome");
+        return mv;
+    }
+
     /**
      * 进入用户列表
      */
