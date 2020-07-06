@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+//Repository用于将数据访问层（DAO层）的类标识为SpringBean
 @Repository("mybatis")
 public class UserDaoImpl implements IUserDao{
 

@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 用户类
  */
@@ -16,16 +20,19 @@ public class User {
     private String uname;
     //密码
     private String upass;
+    //注册时间
+    private Date date;
     //头像
     private String headpic;
 
     public User() {
     }
 
-    public User(Integer id, String uname, String upass) {
+    public User(Integer id, String uname, String upass, Date date) {
         this.id = id;
         this.uname = uname;
         this.upass = upass;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -52,6 +59,14 @@ public class User {
         this.upass = upass;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getHeadpic() {
         return headpic;
     }
@@ -62,10 +77,22 @@ public class User {
 
     @Override
     public String toString() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return "User{" +
                 "id=" + id +
                 ", uname='" + uname + '\'' +
                 ", upass='" + upass + '\'' +
+                ", date=" + df.format(date) +
                 '}';
     }
+
+/*    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", uname='" + uname + '\'' +
+                ", upass='" + upass + '\'' +
+                ", date=" + date +
+                '}';
+    }*/
 }

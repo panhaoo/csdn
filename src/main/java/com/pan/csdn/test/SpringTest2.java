@@ -30,8 +30,8 @@ public class SpringTest2 {
     @Test
     public void test03(){
         //添加用户
-        User user=new User(null,"testman20200701","0701");
-        userMapper.insert(user);
+        //User user=new User(null,"testman20200701","0701");
+       // userMapper.insert(user);
     }
     @Test
     public void test04(){
@@ -56,8 +56,8 @@ public class SpringTest2 {
 
     @Test
     public void test06(){
-        User user=userMapper.getUserById(1);
-        System.out.println(user);
+        //User user=userMapper.getUserById(1);
+        //System.out.println(user);
     }
 
 }

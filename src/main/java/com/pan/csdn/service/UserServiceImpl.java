@@ -1,5 +1,6 @@
 package com.pan.csdn.service;
 
+
 import com.pan.csdn.bean.User;
 import com.pan.csdn.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//@Service 注解 ：UserServiceImpl如果打上@Service，
+// 在Spring启动的时候，会被扫描到Spring容器中，组件被Spring容器所管理。
 @Service
 public class UserServiceImpl implements IUserService{
     //传统模式 Service 和 DAO 耦合了
@@ -30,9 +33,8 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public User login(User user) {
-        User res = userMapper.getUserByName(user.getUname());
-        if(user.getUpass().equals(res.getUpass())){
-            return res;
+        if(user.getUname().equals("zhangsan") && user.getUpass().equals("123")){
+            return user;
         }else {
             return null;
         }
@@ -63,6 +65,11 @@ public class UserServiceImpl implements IUserService{
     @Override
     public int deleteById(Integer id) {
         return userMapper.deleteById(id);
+    }
+
+    @Override
+    public int deleteBatchIds(List<Integer> list) {
+        return userMapper.deleteBatchIds(list);
     }
 
 }

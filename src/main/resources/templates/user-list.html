@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>用户列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet"  th:href="@{/css/font.css}">
+  <link rel="stylesheet"  th:href="@{/css/xadmin.css}">
+  <script type="text/javascript" th:src="@{/plugins/jquery/jquery.min.js}" ></script>
+  <script  th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+  <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+  <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+  
+<body class="layui-anim layui-anim-up">
+  <div class="x-nav">
+    <span class="layui-breadcrumb">
+      <a href="">首页</a>
+      <a href="">演示</a>
+      <a>
+        <cite>导航元素</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+      <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+  </div>
+  <div class="x-body">
+    <div class="layui-row">
+      <form class="layui-form layui-col-md12 x-so">
+        <input class="layui-input" placeholder="开始日" name="start" id="start">
+        <input class="layui-input" placeholder="截止日" name="end" id="end">
+        <span style="color:red"> &nbsp;&nbsp;/&nbsp;&nbsp; </span>
+        <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+      </form>
+    </div>
+    <xblock>
+      <button id="ids" class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+      <button class="layui-btn" onclick="x_admin_show('添加用户','/user/toAddUser',600,400)"><i class="layui-icon"></i>添加</button>
+      <span id="totalNumber" class="x-right" style="line-height:40px"></span>
+    </xblock>
+  </div>
+
+    <div>
+      <table id="demo" class="layui-table" lay-filter="test"></table>
+    </div>
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+  <script>
+    layui.use(['form','layer'], function(){
+      $ = layui.jquery;
+      var form = layui.form
+              ,layer = layui.layer;
+
+      //监听提交
+      form.on('submit(sreach)', function(data){
+        console.log(data);
+        console.log(JSON.stringify(data.field));
+        layer.confirm("nihao");
+        //发异步，把数据提交给php  //ajax
+        /*$.ajax({
+          url:"/user/doAddUser",
+          dataType:"json",
+          data:data.field,
+          success:function (data) {
+            if (data.code == 0){
+              layer.alert(data.msg, {icon: 6},function () {
+                // 获得frame索引
+                var index = parent.layer.getFrameIndex(window.name);
+                //关闭当前frame
+                parent.layer.close(index);
+
+                //修改成功后刷新父界面
+                parent.location.reload();
+              });
+            }else {
+              layer.alert("增加失败");
+            }
+          }
+        })*/
+        return false;
+      });
+    });
+  </script>
+
+  <script>
+
+    /*用户-停用*/
+    function member_stop(obj,id){
+      layer.confirm('确认要停用吗？',function(index){
+
+        if($(obj).attr('title')=='启用'){
+
+          //发异步把用户状态进行更改
+          $(obj).attr('title','停用')
+          $(obj).find('i').html('&#xe62f;');
+
+          $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+          layer.msg('已停用!',{icon: 5,time:1000});
+
+        }else{
+          $(obj).attr('title','启用')
+          $(obj).find('i').html('&#xe601;');
+
+          $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+          layer.msg('已启用!',{icon: 5,time:1000});
+        }
+
+      });
+    }
+
+  </script>
+
+  <script>
+    layui.use('laydate', function(){
+      var laydate = layui.laydate;
+
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#start' //指定元素
+      });
+
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#end' //指定元素
+      });
+    });
+  </script>
+
+  <script>
+    layui.use('table', function(data){
+      var table = layui.table;
+
+      var table_data = new Array();  //table里的数据
+      var ids = new Array();  //选到的id
+
+      //第一个实例
+      table.render({
+        elem: '#demo'
+        ,height: 389
+        ,url: '/user/getUsers' //数据接口
+        ,page: true //开启分页
+        ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+        ,align: 'center'
+        ,cols: [
+                [ //表头
+          {type: 'checkbox'}
+          ,{field: 'id', title: 'ID', sort: true, align:'center'}
+          ,{field: 'uname', title: '用户名', align:'center'}
+          ,{field: 'upass', title: '密码', align:'center'}
+          ,{field: 'date', title: '注册时间', align:'center' , templet:
+                          "<div>{{layui.util.toDateString(d.date, 'yyyy-MM-dd')}}</div>"
+                  }
+          ,{title: '状态', align:'center', templet: function (d) {
+                    return "<button type=\"button\" onclick=\"member_stop(this,'10001')\" class=\"layui-btn layui-btn-sm layui-btn-danger\">禁用</button>";
+                  }
+                }
+          ,{align:'center', toolbar: '#barDemo'}
+
+        ]
+        ]
+        ,done: function(res, curr, count){
+          //如果是异步请求数据方式，res即为你接口返回的信息。
+          //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+          //当前表格数据
+          console.log(res.data);
+          table_data = res.data;
+
+          //得到当前页码
+          console.log(curr);
+          //count = res.data.length;
+          //得到数据总量
+          console.log(count);
+          $('#totalNumber').text("共有数据："+count+" 条");
+        }
+
+        ,limits: [8,20]
+        ,limit: 8
+        ,parseData: function (res) {
+          var result;
+          console.log(this);
+          console.log(JSON.stringify(res));
+          if (this.page.curr) {
+            result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+          } else {
+            result = res.data.slice(0, this.limit);
+          }
+          return {"code": res.code, "msg": res.msg, "count": res.count, "data": result};
+        }
+
+      });
+
+      table.on('checkbox(test)', function(obj){
+
+        console.log(obj.checked); //当前是否选中状态
+        console.log(obj.data); //选中行的相关数据
+        console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：on
+        var checkStatus = table.checkStatus('demo'),
+                data = checkStatus.data;
+        console.log(data);
+        console.log(checkStatus);
+        ids.splice(0);
+        for (var i = 0; i < data.length; i++) {    //循环筛选出id
+          ids.push(data[i].id);
+        }
+        /*//取选中的id
+        if(obj.checked==true){   //选择
+
+          if(obj.type=='one'){  //选择 且只选一行
+            ids.push(obj.data.id);
+          }else{  //选择 且全选
+            for(var i=0;i<table_data.length;i++){
+              ids.push(table_data[i].id);
+            }
+          }
+
+        }else{  //取消选择
+
+          if(obj.type=='one'){  //取消 且只取消一行
+            for(var i=0;i<ids.length;i++){
+              if(ids[i]==obj.data.id){
+                ids.splice(i,1);
+              }
+            }
+          }else{  //取消 且取消全部
+            ids.splice(0);
+          }
+        }
+
+        if (ids != null){   //消重复
+          ids.sort();
+          for (var i = 0; i < ids.length; i++) {
+            if (ids[i] === ids[i + 1]) {
+              ids.splice(i, 1);
+            }
+          }
+        }*/
+        console.log(ids);
+        $("#ids").val(ids);
+
+      });
+
+      //监听事件
+      table.on('tool(test)', function(obj){
+        //var checkStatus = table.checkStatus(obj.config.id);
+        var data = obj.data; //获取当前行数据
+        switch(obj.event){
+          case 'detail':
+            x_admin_show('查看用户', '/user/toDetailUser/'+data.id, 600, 400);
+            break;
+          case 'edit':
+            x_admin_show('编辑用户', '/user/toEditUser/'+data.id, 600, 450);
+            break;
+          case 'del':
+            layer.confirm("确认删除用户 "+data.uname+" ?", function () {
+                  delectUserById(data.id);
+                  obj.del();
+                  layer.close(layer.index);
+            });
+            break;
+        };
+      });
+    });
+
+    /**
+     * 按单个id删除用户
+     * @param id
+     */
+    function delectUserById(id) {
+      //Restful模式 /user/doDeleteUser/(id)
+      $.ajax({
+        url: "/user/doDeleteUser/"+id,
+        dataType: "json",
+        success: function (data) {
+          //layer.alert(data.msg);
+          layer.msg(data.msg, {icon: 1});
+        }
+      });
+    }
+
+    function delAll(obj) {
+      console.log($("#ids").val());
+      var ids = $("#ids").val();
+      var length = 0;
+      if(ids.length != 0){
+        console.log(ids);
+        for (var i = 0; i < ids.length; i++){
+          if (',' == ids[i]){
+            length++;
+          }
+        }
+        length=length+1;
+        console.log("长度："+length);
+        layer.confirm("确认删除"+length+"条用户信息?", function () {
+          deleteBatchIds(ids);
+          location.reload();
+          layer.close(layer.index);
+        });
+      }
+      else {
+        layer.confirm("未选中任何用户信息！");
+      }
+
+    }
+
+    /**
+     * 按多个id删除用户
+     * @param id
+     */
+    function deleteBatchIds(ids) {
+      //Restful模式 /user/doDeleteUsers/(ids)
+      $.ajax({
+        url: "/user/doDeleteUsers/"+ids,
+        dataType: "json",
+        success: function (data) {
+          //layer.alert(data.msg);
+          layer.msg(data.msg, {icon: 1});
+        }
+      });
+    }
+
+  </script>
+</body>
+
+</html>
