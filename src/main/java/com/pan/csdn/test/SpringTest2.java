@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -58,6 +59,22 @@ public class SpringTest2 {
     public void test06(){
         //User user=userMapper.getUserById(1);
         //System.out.println(user);
+    }
+
+    @Test
+    public void test07(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper = queryWrapper.like("uname","z");
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    @Test
+    public void test08(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper1 = queryWrapper.ge("date","2020-07-06").le("date","2020-07-07");
+        List<User> list = userMapper.selectList(wrapper1);
+        list.forEach(System.out::println);
     }
 
 }

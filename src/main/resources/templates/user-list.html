@@ -36,8 +36,9 @@
         <input class="layui-input" placeholder="开始日" name="start" id="start">
         <input class="layui-input" placeholder="截止日" name="end" id="end">
         <span style="color:red"> &nbsp;&nbsp;/&nbsp;&nbsp; </span>
-        <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-        <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        <input id="seachUname" type="text" name="seachUname"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        <button id="search" class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+<!--        <button data-type="reload" class="layui-btn" ><i class="layui-icon">&#xe615;</i></button>-->
       </form>
     </div>
     <xblock>
@@ -58,37 +59,154 @@
   </script>
 
   <script>
-    layui.use(['form','layer'], function(){
+    layui.use(['form','layer','table','laydate'], function(){
       $ = layui.jquery;
-      var form = layui.form
-              ,layer = layui.layer;
+      var form = layui.form,
+              table = layui.table,
+            laydate = layui.laydate;
 
       //监听提交
       form.on('submit(sreach)', function(data){
         console.log(data);
         console.log(JSON.stringify(data.field));
-        layer.confirm("nihao");
-        //发异步，把数据提交给php  //ajax
-        /*$.ajax({
-          url:"/user/doAddUser",
-          dataType:"json",
-          data:data.field,
-          success:function (data) {
-            if (data.code == 0){
-              layer.alert(data.msg, {icon: 6},function () {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
+        var data = data.field;
+        // console.log(data.start);
+        // console.log(data.end);
+        // console.log(data.seachUname);
+        if (!data.seachUname && !data.start && !data.end){  //无条件，重载表格
+          table.render.reload({
+            elem: '#testReload'
+          });
+        }
+        else if(data.seachUname){   //有姓名，按姓名搜索
 
-                //修改成功后刷新父界面
-                parent.location.reload();
-              });
-            }else {
-              layer.alert("增加失败");
+          //发异步，把数据提交给php  //ajax
+          var uname = data.seachUname;
+          console.log("uname:"+uname);
+
+          //第一个实例
+          table.render({
+            elem: '#demo'
+            ,id: 'testReload'
+            ,height: 389
+            ,url: "/user/searchByUname/"+uname //数据接口
+            ,page: true //开启分页
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+            ,align: 'center'
+            ,cols: [
+              [ //表头
+                {type: 'checkbox'}
+                ,{field: 'id', title: 'ID', sort: true, align:'center'}
+                ,{field: 'uname', title: '用户名', align:'center'}
+                ,{field: 'upass', title: '密码', align:'center'}
+                ,{field: 'date', title: '注册时间', align:'center' , templet:
+                        "<div>{{layui.util.toDateString(d.date, 'yyyy-MM-dd')}}</div>"
+              }
+                ,{title: '状态', align:'center', templet: function (d) {
+                  return "<button type=\"button\" onclick=\"member_stop(this,'10001')\" class=\"layui-btn layui-btn-sm layui-btn-danger\">禁用</button>";
+                }
+              }
+                ,{align:'center', toolbar: '#barDemo'}
+
+              ]
+            ]
+            ,done: function(res, curr, count){
+              //如果是异步请求数据方式，res即为你接口返回的信息。
+              //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+              //当前表格数据
+              console.log(res.data);
+
+              //得到当前页码
+              console.log(curr);
+              //count = res.data.length;
+              //得到数据总量
+              console.log(count);
+              $('#totalNumber').text("共有数据："+count+" 条");
             }
-          }
-        })*/
+
+            ,limits: [8,20]
+            ,limit: 8
+            ,parseData: function (res) {
+              var result;
+              console.log(this);
+              console.log(JSON.stringify(res));
+              if (this.page.curr) {
+                result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+              } else {
+                result = res.data.slice(0, this.limit);
+              }
+              return {"code": res.code, "msg": res.msg, "count": res.count, "data": result};
+            }
+
+          });
+
+        }else if (data.start || data.end){  //有日期
+          console.log(data.start);
+          console.log(data.end);
+          var list = new Array(data.start,data.end);
+          console.log(list);
+
+          //第一个实例
+          table.render({
+            elem: '#demo'
+            ,id: 'testReload'
+            ,height: 389
+            ,url: "/user/searchByDate/"+list //数据接口
+            ,page: true //开启分页
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度
+            ,align: 'center'
+            ,cols: [
+              [ //表头
+                {type: 'checkbox'}
+                ,{field: 'id', title: 'ID', sort: true, align:'center'}
+                ,{field: 'uname', title: '用户名', align:'center'}
+                ,{field: 'upass', title: '密码', align:'center'}
+                ,{field: 'date', title: '注册时间', align:'center' , templet:
+                        "<div>{{layui.util.toDateString(d.date, 'yyyy-MM-dd')}}</div>"
+              }
+                ,{title: '状态', align:'center', templet: function (d) {
+                  return "<button type=\"button\" onclick=\"member_stop(this,'10001')\" class=\"layui-btn layui-btn-sm layui-btn-danger\">禁用</button>";
+                }
+              }
+                ,{align:'center', toolbar: '#barDemo'}
+
+              ]
+            ]
+            ,done: function(res, curr, count){
+              //如果是异步请求数据方式，res即为你接口返回的信息。
+              //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+              //当前表格数据
+              console.log(res.data);
+
+              //得到当前页码
+              console.log(curr);
+              //count = res.data.length;
+              //得到数据总量
+              console.log(count);
+              $('#totalNumber').text("共有数据："+count+" 条");
+            }
+
+            ,limits: [8,20]
+            ,limit: 8
+            ,parseData: function (res) {
+              var result;
+              console.log(this);
+              console.log(JSON.stringify(res));
+              if (this.page.curr) {
+                result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+              } else {
+                result = res.data.slice(0, this.limit);
+              }
+              return {"code": res.code, "msg": res.msg, "count": res.count, "data": result};
+            }
+
+          });
+
+          console.log("333");
+        }
+
         return false;
       });
     });
@@ -148,6 +266,7 @@
       //第一个实例
       table.render({
         elem: '#demo'
+        ,id: 'testReload'
         ,height: 389
         ,url: '/user/getUsers' //数据接口
         ,page: true //开启分页
@@ -202,7 +321,32 @@
 
       });
 
-      table.on('checkbox(test)', function(obj){
+      /*var $ = layui.$, active = {
+        reload: function(){
+          var demoReload = $('#seachUname');
+          console.log(demoReload);
+          console.log(demoReload.val());
+
+          //执行重载
+          table.reload('testReload', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            }
+            ,where: {
+              key: {
+                uname: demoReload.val()
+              }
+            }
+          }, 'data');
+        }
+      };
+
+      $('.demoTable .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+      });*/
+
+    table.on('checkbox(test)', function(obj){
 
         console.log(obj.checked); //当前是否选中状态
         console.log(obj.data); //选中行的相关数据

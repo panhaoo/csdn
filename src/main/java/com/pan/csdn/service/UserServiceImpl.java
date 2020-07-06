@@ -1,6 +1,7 @@
 package com.pan.csdn.service;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pan.csdn.bean.User;
 import com.pan.csdn.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,38 @@ public class UserServiceImpl implements IUserService{
     @Override
     public int deleteBatchIds(List<Integer> list) {
         return userMapper.deleteBatchIds(list);
+    }
+
+    @Override
+    public List<User> searchByUname(String searchUname) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper = queryWrapper.like("uname",searchUname);
+        List<User> list = userMapper.selectList(wrapper);
+        return list;
+    }
+
+    @Override
+    public List<User> searchByDate(List<String> list) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        List<User> list1 = null;
+        String start = list.get(0);
+        String end = list.get(1);
+        System.out.println("start:"+start);
+        System.out.println("end:"+end);
+        //>=ge  <= le
+        if(!start.isEmpty() && !end.isEmpty()){
+            QueryWrapper<User> wrapper1 = queryWrapper.ge("date",start).le("date",end);
+            list1 = userMapper.selectList(wrapper1);
+        }
+        else if(!start.isEmpty() && end.isEmpty()) {
+            QueryWrapper<User> wrapper2 = queryWrapper.ge("date",start);
+            list1 = userMapper.selectList(wrapper2);
+        }
+        else if(start.isEmpty() && !end.isEmpty()){
+            QueryWrapper<User> wrapper3 = queryWrapper.le("date",end);
+            list1 = userMapper.selectList(wrapper3);
+        }
+        return list1;
     }
 
 }
