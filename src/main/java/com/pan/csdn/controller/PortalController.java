@@ -1,12 +1,9 @@
 package com.pan.csdn.controller;
 
 import com.pan.csdn.bean.Article;
-<<<<<<< HEAD
 import com.pan.csdn.bean.User;
-=======
 import com.pan.csdn.bean.Articles;
 import com.pan.csdn.bean.Category;
->>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
 import com.pan.csdn.service.IArticleService;
 import com.pan.csdn.service.ICategoryService;
 import com.pan.csdn.utils.Result;
@@ -194,7 +191,7 @@ public class PortalController {
         //获取文章列表
         List<Articles> articles = articleService.getArticlesWait();
         modelAndView.addObject("articles", articles);
-return
+        return modelAndView;
     }
     @RequestMapping("/searchByTitle/{title}")
     //Restful路径传参(id)模式

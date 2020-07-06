@@ -2,11 +2,8 @@ package com.pan.csdn.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pan.csdn.bean.Article;
-<<<<<<< HEAD
 import com.pan.csdn.bean.User;
-=======
 import com.pan.csdn.bean.Articles;
->>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
 import com.pan.csdn.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
