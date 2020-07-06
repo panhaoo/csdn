@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0031)http://zhishiku.little-star.me/ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
@@ -179,10 +179,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <ul class="list">
-                        <li class="active"><a href="/article/portal_index">全部</a></li>
+                        <li><a href="/article/portal_index">全部</a></li>
 
                         <li th:each="c:${categories}">
-                            <a th:href="@{'/article/portal_index_category'+${c.categoryName}}" th:text="${c.categoryName}"></a>
+                            <a class="active" th:href="@{'/article/portal_index_category'+${c.categoryName}}" th:text="${c.categoryName}"></a>
                         </li>
 
                     </ul>
@@ -211,10 +211,10 @@
                     <!-- end 新消息通知 -->
                     <!-- tab切换 -->
                     <ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
-                        <li><a href="/article/portal_index_wait">等待回复</a></li>
-                        <li><a href="/article/portal_index_commend">推荐</a></li>
-                        <li><a href="/article/portal_index_hot" id="sort_control_hot">热门</a></li>
-                        <li class="active"><a href="/article/portal_index">最新</a></li>
+                        <li><a th:href="@{'/article/portal_index_category_wait'+${categoryname}}">等待回复</a></li>
+                        <li class="active"><a th:href="@{'/article/portal_index_category_commend'+${categoryname}}">推荐</a></li>
+                        <li><a th:href="@{'/article/portal_index_category_hot'+${categoryname}}" id="sort_control_hot">热门</a></li>
+                        <li><a th:href="@{'/article/portal_index_category'+${categoryname}}">最新</a></li>
 
                         <h2 class="hidden-xs"><i class="icon icon-list"></i> 发现</h2>
                     </ul>
@@ -304,7 +304,5 @@
 document.write(unescape("%3Cdiv%20style%3D%27text-align%3Acenter%27%3E%3Cspan id='cnzz_stat_icon_1273638993'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1273638993%26show%3Dpic' type='text/javascript'%3E%3C/script%3E%3C/div%3E"));</script><div style="text-align:center"><span id="cnzz_stat_icon_1273638993"><a href="https://www.cnzz.com/stat/website.php?web_id=1273638993" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./index_files/pic.gif"></a></span><script src="./index_files/z_stat.php" type="text/javascript"></script><script src="./index_files/core.php" charset="utf-8" type="text/javascript"></script></div>
 
 <!-- Escape time: 0.077376842498779 --><!-- / DO NOT REMOVE -->
-
-
-
-</body></html>
+</body>
+</html>

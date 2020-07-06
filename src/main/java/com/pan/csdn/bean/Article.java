@@ -12,7 +12,7 @@ public class Article {
         //标题
         private String title;
         //内容
-        private String category;
+        private Integer cid;
 
         private Integer comment;
 
@@ -26,23 +26,21 @@ public class Article {
 
         private String releasetime;
 
-        private String uname;
         public Article(){
 
         }
 
 
-    public Article(Integer id, String title, String category, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime, String uname) {
+    public Article(Integer id, String title, Integer cid, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime) {
         this.id = id;
         this.title = title;
-        this.category = category;
+        this.cid = cid;
         this.comment = comment;
         this.cover = cover;
         this.scontent = scontent;
         this.browse = browse;
         this.userid = userid;
         this.releasetime = releasetime;
-        this.uname = uname;
     }
 
     public Integer getId() {
@@ -93,11 +91,13 @@ public class Article {
             this.releasetime = releasetime;
         }
 
-        public String getCategory() { return category; }
+        public Integer getCid() {
+         return cid;
+        }
 
-        public void setCategory(String category) { this.category = category; }
-
-
+        public void setCid(Integer cid) {
+            this.cid = cid;
+        }
 
     public String getCover() {
         return cover;
@@ -115,27 +115,19 @@ public class Article {
         this.scontent = scontent;
     }
 
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
 
     @Override
     public String toString() {
         return "Article{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
+                ", cid=" + cid +
                 ", comment=" + comment +
                 ", cover='" + cover + '\'' +
                 ", scontent='" + scontent + '\'' +
                 ", browse=" + browse +
                 ", userid=" + userid +
                 ", releasetime='" + releasetime + '\'' +
-                ", uname='" + uname + '\'' +
                 '}';
     }
 }
