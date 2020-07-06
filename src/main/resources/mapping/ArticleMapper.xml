@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pan.csdn.mapper.ArticleMapper">
-    <resultMap id="ArticleResultMapper" type="com.pan.csdn.bean.Article">
+    <resultMap id="ArticleResultMapper" type="com.pan.csdn.bean.Articles">
         <!--主键-->
         <id column="id" property="id"></id>
         <!--普通字段-->
         <result column="title" property="title"></result>
+<<<<<<< HEAD
+=======
+        <result column="cid" property="cid"></result>
+        <result column="category_name" property="categoryname"></result>
+>>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
         <result column="comment" property="comment"></result>
         <result column="cover" property="cover"></result>
         <result column="scontent" property="scontent"></result>
@@ -14,8 +19,57 @@
         <result column="releasetime" property="releasetime"></result>
     </resultMap>
     <select id="getArticles" resultMap="ArticleResultMapper">
-        select article.*,user.uname from article,user
+        select article.*,category.category_name,user.uname from article,user,category
         where article.userid = user.id
+        and article.cid = category.id
+        order by releasetime desc
+    </select>
+    <select id="getArticlesHot" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        order by browse desc
+    </select>
+    <select id="getArticlesCommend" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        order by comment desc;
+    </select>
+    <select id="getArticlesWait" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        ORDER BY comment
+    </select>
+
+    <select id="getArticlesCategory" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        and article.cid = #{id}
+        order by releasetime desc
+    </select>
+    <select id="getArticlesCategoryHot" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        and article.cid = #{id}
+        order by browse desc
+    </select>
+    <select id="getArticlesCategoryCommend" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        and article.cid = #{id}
+        order by comment desc;
+    </select>
+    <select id="getArticlesCategoryWait" resultMap="ArticleResultMapper">
+        select article.*,category.category_name,user.uname from article,user,category
+        where article.userid = user.id
+        and article.cid = category.id
+        and article.cid = #{id}
+        ORDER BY comment
     </select>
     <!--定义查询-->
     <select id="getArticleById" parameterType="Integer" resultMap="ArticleResultMapper">

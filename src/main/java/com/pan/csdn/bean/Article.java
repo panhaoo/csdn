@@ -13,6 +13,10 @@ public class Article {
         //标题
         private String title;
         //内容
+<<<<<<< HEAD
+=======
+        private Integer cid;
+>>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
 
         private Integer comment;
 
@@ -29,7 +33,20 @@ public class Article {
         public Article(){
 
         }
+        
+    public Article(Integer id, String title, Integer cid, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime) {
+        this.id = id;
+        this.title = title;
+        this.cid = cid;
+        this.comment = comment;
+        this.cover = cover;
+        this.scontent = scontent;
+        this.browse = browse;
+        this.userid = userid;
+        this.releasetime = releasetime;
+    }
 
+<<<<<<< HEAD
         public Article(Integer id, String title, Integer comment, String cover, String scontent, Integer browse, Integer userid, String releasetime) {
             this.id = id;
             this.title = title;
@@ -40,8 +57,10 @@ public class Article {
             this.userid = userid;
             this.releasetime = releasetime;
         }
+=======
+    public Integer getId() {
+>>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
 
-        public Integer getId() {
             return id;
         }
 
@@ -57,7 +76,10 @@ public class Article {
             this.title = title;
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
         public Integer getComment() {
             return comment;
         }
@@ -106,6 +128,7 @@ public class Article {
             this.releasetime = releasetime;
         }
 
+<<<<<<< HEAD
         @Override
         public String toString() {
             return "Article{" +
@@ -118,6 +141,32 @@ public class Article {
                     ", userid=" + userid +
                     ", releasetime='" + releasetime + '\'' +
                     '}';
+=======
+
+        public Integer getCid() {
+         return cid;
+>>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
         }
+
+        public void setCid(Integer cid) {
+            this.cid = cid;
+        }
+
+
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", cid=" + cid +
+                ", comment=" + comment +
+                ", cover='" + cover + '\'' +
+                ", scontent='" + scontent + '\'' +
+                ", browse=" + browse +
+                ", userid=" + userid +
+                ", releasetime='" + releasetime + '\'' +
+                '}';
+    }
 }
 

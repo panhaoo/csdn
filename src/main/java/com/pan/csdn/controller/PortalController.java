@@ -1,8 +1,14 @@
 package com.pan.csdn.controller;
 
 import com.pan.csdn.bean.Article;
+<<<<<<< HEAD
 import com.pan.csdn.bean.User;
+=======
+import com.pan.csdn.bean.Articles;
+import com.pan.csdn.bean.Category;
+>>>>>>> aba4866c7f97d50bc9647420abc0d4b14bfd7f6c
 import com.pan.csdn.service.IArticleService;
+import com.pan.csdn.service.ICategoryService;
 import com.pan.csdn.utils.Result;
 import com.pan.csdn.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +27,9 @@ import java.util.List;
 public class PortalController {
 
     @Autowired
+    ICategoryService categoryService;
+
+    @Autowired
     IArticleService articleService;
     @RequestMapping("/toArticle")
     public ModelAndView toArticle(){
@@ -32,7 +41,7 @@ public class PortalController {
     @RequestMapping("/getArticles")
     public Result getUsers(){
         Result result = null;
-        List<Article> list = articleService.getArticles();
+        List<Articles> list = articleService.getArticles();
         result = ResultUtils.success(list);
         result.setCode(0);
         result.setMsg("查询成功");
@@ -144,11 +153,49 @@ public class PortalController {
     public ModelAndView toIndex(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("portal_index");
-        List<Article> articles = articleService.getArticles();
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticles();
         modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categories",categories);
         return modelAndView;
     }
-
+    @RequestMapping("/portal_index_hot")
+    public ModelAndView toIndexHot(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_hot");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesHot();
+        modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
+    @RequestMapping("/portal_index_commend")
+    public ModelAndView toIndexCommend(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_commend");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesCommend();
+        modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
+    @RequestMapping("/portal_index_wait")
+    public ModelAndView toIndexWait() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_wait");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesWait();
+        modelAndView.addObject("articles", articles);
+return
+    }
     @RequestMapping("/searchByTitle/{title}")
     //Restful路径传参(id)模式
     public Result searchByTitle(@PathVariable String title){
@@ -163,4 +210,56 @@ public class PortalController {
         return result;
     }
 
+    @RequestMapping("/portal_index_category{categoryname}")
+    public ModelAndView toIndexComputer(@PathVariable String categoryname){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_category");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesCategory(categoryname);
+        modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categoryname",categoryname);
+        modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
+    @RequestMapping("/portal_index_category_hot{categoryname}")
+    public ModelAndView toIndexCategoryHot(@PathVariable String categoryname){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_category_hot");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesCategoryHot(categoryname);
+        modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categoryname",categoryname);
+        modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
+    @RequestMapping("/portal_index_category_commend{categoryname}")
+    public ModelAndView toIndexCategoryCommend(@PathVariable String categoryname){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_category_commend");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesCategoryCommend(categoryname);
+        modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categoryname",categoryname);
+        modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
+    @RequestMapping("/portal_index_category_wait{categoryname}")
+    public ModelAndView toIndexCategoryWait(@PathVariable String categoryname){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("portal_index_category_wait");
+        //获取分类列表
+        List<Category> categories = categoryService.getAllCategory();
+        //获取文章列表
+        List<Articles> articles = articleService.getArticlesCategoryWait(categoryname);
+        modelAndView.addObject("articles",articles);
+        modelAndView.addObject("categoryname",categoryname);
+        modelAndView.addObject("categories",categories);
+        return modelAndView;
+    }
 }
