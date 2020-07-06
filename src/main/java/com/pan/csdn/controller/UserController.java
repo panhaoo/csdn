@@ -21,10 +21,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @RestController = @Controller + @ResponseBody
@@ -84,6 +81,7 @@ public class UserController {
     public ModelAndView toWelcome(){
         System.out.println("加载欢迎界面");
         ModelAndView mv = new ModelAndView();
+        //设置视图
         mv.setViewName("user-welcome");
         return mv;
     }

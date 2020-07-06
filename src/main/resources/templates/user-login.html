@@ -65,13 +65,13 @@
                     success:function (data) {
                         if(data.code==10000){
                             //登录成功
-                            layer.msg(data.msg,function(){
+                            layer.msg("登录成功",function(){
                                 //前端跳转页面
-                                location.href='/index'
+                                location.href='/user/index';
                             });
                         }
                         else{
-                            layer.msg(data.msg);
+                            layer.msg("用户名或密码不正确");
                         }
                     }
                 });

@@ -34,11 +34,24 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public User login(User user) {
-        if(user.getUname().equals("zhangsan") && user.getUpass().equals("123")){
-            return user;
-        }else {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> wrapper = queryWrapper.eq("uname",user.getUname());
+        try {
+            if (userMapper.selectOne(wrapper).equals(null)){
+                return null;
+            }else {
+                QueryWrapper<User> wrapper1 = queryWrapper.eq("uname",user.getUname())
+                        .eq("upass",user.getUpass());
+                if (userMapper.selectOne(wrapper1).equals(null)){
+                    return null;
+                }else {
+                    return userMapper.selectOne(wrapper1);
+                }
+            }
+        }catch (Exception e){
             return null;
         }
+
     }
 
     @Override
