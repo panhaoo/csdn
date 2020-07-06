@@ -75,8 +75,8 @@
               <button  class="layui-btn" lay-filter="edit" lay-submit="">
                   修改
               </button>
-              <button  type="button" class="layui-btn layui-btn-danger">
-                  重置
+              <button  type="button" class="layui-btn layui-btn-danger" id="reset">
+                  恢复
               </button>
           </div>
       </form>
@@ -87,9 +87,12 @@
         var form = layui.form
         ,layer = layui.layer;
 
+          form.verify({
+              comment: [ /[0-9]$/, '评论数只能输入数字'],
+              browse: [ /[0-9]$/, '浏览数只能输入数字'],
+          });
 
         //监听提交
-//监听提交
           form.on('submit(edit)', function(data){
               //前端将对象转json字符串
               console.log(JSON.stringify(data.field));
@@ -118,9 +121,14 @@
               return false;
           });
 
-        
-        
+
       });
+      var reset = document.getElementById("id");
+      reset.onclick = function (obj) {
+
+          var data = obj.data;
+        x_admin_show('查看Article知识文章','/article/toDetail/'+data.id,500,400);
+      }
   </script>
 
 

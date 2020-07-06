@@ -96,7 +96,7 @@ public class PortalController {
         }
         return result;
     }
-    @RequestMapping("/doDeleteArtrs/{ids}")
+    @RequestMapping("/doDeleteArts/{ids}")
     //Restful路径传参(ids)模式
     public Result doDeleteArts(@PathVariable List<Integer> ids){
         Result result = null;

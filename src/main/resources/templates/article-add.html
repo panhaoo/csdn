@@ -27,7 +27,7 @@
               <label for="L_title" class="layui-form-label">标题
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_title" name="title" required="" lay-verify="title"
+                  <input type="text" id="L_title" name="title" required="" lay-verify="title" placeholder="请输入标题"
                   autocomplete="off" class="layui-input">
               </div>
           </div>
@@ -36,16 +36,20 @@
               <label for="L_comment" class="layui-form-label">评论
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_comment" name="comment" required="" lay-verify="comment"
+                  <input type="text" id="L_comment" name="comment" required="" lay-verify="comment" placeholder="请输入评论数"
                   autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">只能输入数字
               </div>
           </div>
             <div class="layui-form-item">
                 <label for="L_browse" class="layui-form-label">浏览
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="L_browse" name="browse" required="" lay-verify="browse"
+                    <input type="text" id="L_browse" name="browse" required="" lay-verify="browse" placeholder="请输入浏览数"
                            autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">只能输入数字
                 </div>
             </div>
 
@@ -53,7 +57,7 @@
                 <label for="L_userid" class="layui-form-label">作者ID
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="L_userid" name="userid" required="" lay-verify="userid"
+                    <input type="text" id="L_userid" name="userid" required="" lay-verify="userid"  placeholder="请输入作者ID"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
@@ -62,7 +66,7 @@
                 <label for="L_releasetime" class="layui-form-label">发布时间
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="L_releasetime" name="releasetime" required="" lay-verify="releasetime"
+                    <input type="text" id="L_releasetime" name="releasetime" required="" lay-verify="releasetime" placeholder="请输入发布时间"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
@@ -74,7 +78,7 @@
               <button  class="layui-btn" lay-filter="add" lay-submit="">
                   增加
               </button>
-              <button type="button" class="layui-btn layui-btn-danger">重置</button>
+              <button type="button" class="layui-btn layui-btn-danger" onclick="doReset()">重置</button>
           </div>
       </form>
     </div>
@@ -93,7 +97,10 @@
           var form = layui.form
           ,layer = layui.layer;
 
-
+            form.verify({
+            comment: [ /[0-9]$/, '评论数只能输入数字'],
+            browse: [ /[0-9]$/, '浏览数只能输入数字'],
+            });
           //监听提交
           form.on('submit(add)', function(data){
             console.log(JSON.stringify(data.field));
@@ -119,33 +126,16 @@
             });
             return false;
           });
-          
-          
         });
+        //
+       function doReset(){
+            $("#L_title").val("");
+            $("#L_comment").val("");
+            $("#L_browse").val("");
+            $("#L_userid").val("");
+            $("#L_releasetime").val("");
+        };
     </script>
-    <script>
-        layui.use('upload', function(){
-            var upload = layui.upload;
-
-            //执行实例
-            var uploadInst = upload.render({
-                elem: '#test1' //绑定元素
-                ,url: '/admin/uploadHeadPic' //上传接口
-                ,done: function(res){
-                    //上传完毕回调
-                    layer.msg("上传成功");
-                    var headpic=res.data.src;
-                    $("#img_headpic").attr("src","/user/"+headpic);
-                    $("#headpic").val(headpic);
-                }
-                ,error: function(){
-                    //请求异常回调
-                    layer.msg("上传失败");
-                }
-            });
-        });
-    </script>
-
 
 
   </body>

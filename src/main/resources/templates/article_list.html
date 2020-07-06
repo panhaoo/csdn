@@ -214,7 +214,7 @@
        * @param id
        */
       function deleteBatchIds(ids) {
-        //Restful模式 /user/doDeleteUsers/(ids)
+        //Restful模式 /article/doDeleteArts/"+ids
         $.ajax({
           url: "/article/doDeleteArts/"+ids,
           dataType: "json",
