@@ -20,6 +20,9 @@
         from category
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="getCidByCname" parameterType="java.lang.String" resultType="int">
+        select id from category where category_name=#{cname}
+    </select>
     <select id="listCategory" resultType="com.pan.csdn.bean.Category">
         select <include refid="Base_Column_List"></include>
         from category

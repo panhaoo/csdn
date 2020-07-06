@@ -19,5 +19,7 @@ public interface CategoryMapper extends BaseMapper<Category> {
 
     int updateByPrimaryKey(Category record);
 
+    int getCidByCname(String cname);
+
     List<Category> listCategory();
 }

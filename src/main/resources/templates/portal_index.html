@@ -224,7 +224,7 @@
                         <div class="mod-body">
                             <div class="aw-common-list">
                                 <div th:each="t:${articles}" class="aw-item article" data-topic-id="">
-                                    <a class="aw-user-name hidden-xs" data-id="1" href="http://zhishiku.little-star.me/?/people/1" rel="nofollow"><img src="./index_files/01_avatar_max.jpg" alt=""></a>	<div class="aw-question-content">
+                                    <a class="aw-user-name hidden-xs" data-id="1" href="http://zhishiku.little-star.me/?/people/1" rel="nofollow"><img th:src="@{'/user/'+${t.getCover()}}" width="100px" height="100px" /></a>	<div class="aw-question-content">
                                     <h4>
                                         <a th:href="@{'/article/content/' + ${t.id}}" th:text="${t.title}"></a>
                                     </h4>
@@ -258,7 +258,7 @@
                         </div>
                         <div class="mod-body">
                             <ul>
-                                <li><a href="http://zhishiku.little-star.me/?/feature/lev_1_2">大一大二的学生公关</a></li>
+                                <li><a href="http://zhishiku.little-star.me/?/feature/lev_1_2"></a></li>
                             </ul>
                         </div>
                     </div>
