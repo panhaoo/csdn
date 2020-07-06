@@ -1,6 +1,5 @@
 package com.pan.csdn.controller;
 
-
 import com.pan.csdn.bean.User;
 import com.pan.csdn.service.IUserService;
 import com.pan.csdn.utils.Result;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -151,6 +151,46 @@ public class UserController {
         result = ResultUtils.success(user);
         result.setCode(0);
         result.setMsg("添加成功");
+        return result;
+    }
+
+    @RequestMapping("/recoverUser/{id}")
+    public Result recoverUser(@PathVariable Integer id){
+        Result result = null;
+        User user = userService.getUserById(id);
+        user.setFlag("y");
+        int data = userService.updateById(user);
+        result = ResultUtils.success(data);
+        if (data > 0 ){
+            result.setMsg("恢复成功");
+            System.out.println("恢复用户:【"+user.toString()+"】");
+        }
+        else {
+            result.setMsg("恢复失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/recoverUserByBatchIds/{ids}")
+    //Restful路径传参(ids)模式
+    public Result recoverUserByBatchIds(@PathVariable List<Integer> ids){
+        Result result = null;
+        //int data = userService.deleteBatchIds(ids);
+        int data = 0;
+        for (Integer i: ids
+        ) {
+            User user = userService.getUserById(i);
+            user.setFlag("y");
+            data += userService.updateById(user);
+        }
+        result = ResultUtils.success(data);
+        if (data > 0 ){
+            result.setMsg("恢复成功");
+            System.out.println("恢复"+data+"条用户信息");
+        }
+        else {
+            result.setMsg("恢复失败");
+        }
         return result;
     }
 

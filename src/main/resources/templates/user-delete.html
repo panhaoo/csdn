@@ -43,7 +43,7 @@
     </div>
     <xblock>
         <button id="ids" class="layui-btn layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button id="ids" class="layui-btn layui-btn" onclick="addAll()"><i class="layui-icon"></i>批量恢复</button>
+        <button id="ids1" class="layui-btn layui-btn" onclick="recoverAll()"><i class="layui-icon"></i>批量恢复</button>
         <span id="totalNumber" class="x-right" style="line-height:40px"></span>
     </xblock>
 </div>
@@ -54,7 +54,7 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="add">恢复</a>
+    <a class="layui-btn layui-btn-xs" lay-event="recover">恢复</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
@@ -337,7 +337,7 @@
             }
             console.log(ids);
             $("#ids").val(ids);
-
+            $("#ids1").val(ids);
         });
 
         //监听事件
@@ -348,8 +348,12 @@
                 case 'detail':
                     x_admin_show('查看用户', '/user/toDetailUser/'+data.id, 600, 400);
                     break;
-                case 'add':  //恢复用户
-                    //x_admin_show('编辑用户', '/user/toEditUser/'+data.id, 600, 450);
+                case 'recover':  //恢复用户
+                    layer.confirm("确认恢复用户 "+data.uname+" ?", function () {
+                        recoverUserById(data.id);
+                        location.reload();
+                        layer.close(layer.index);
+                    });
                     break;
                 case 'del':
                     layer.confirm("确认删除用户 "+data.uname+" ?", function () {
@@ -361,6 +365,62 @@
             };
         });
     });
+
+    /**
+     * 按单个id恢复用户
+     * @param id
+     */
+    function recoverUserById(id) {
+        //Restful模式 /user/recoverUser/(id)
+        $.ajax({
+            url: "/user/recoverUser/"+id,
+            dataType: "json",
+            success: function (data) {
+                //layer.alert(data.msg);
+                layer.msg(data.msg, {icon: 1});
+            }
+        });
+    }
+
+    function recoverAll(obj) {
+        console.log($("#ids1").val());
+        var ids = $("#ids1").val();
+        var length = 0;
+        if(ids.length != 0){
+            console.log(ids);
+            for (var i = 0; i < ids.length; i++){
+                if (',' == ids[i]){
+                    length++;
+                }
+            }
+            length=length+1;
+            console.log("长度："+length);
+            layer.confirm("确认恢复"+length+"条用户信息?", function () {
+                recoverUserByBatchIds(ids);
+                location.reload();
+                layer.close(layer.index);
+            });
+        }
+        else {
+            layer.confirm("未选中任何用户信息！");
+        }
+    }
+
+    /**
+     * 按多个id恢复用户
+     * @param id
+     */
+    function recoverUserByBatchIds(ids) {
+        //Restful模式 /user/recoverUserByBatchIds/(ids)
+        $.ajax({
+            url: "/user/recoverUserByBatchIds/"+ids,
+            dataType: "json",
+            success: function (data) {
+                //layer.alert(data.msg);
+                layer.msg(data.msg, {icon: 1});
+            }
+        });
+    }
 
     /**
      * 按单个id删除用户
