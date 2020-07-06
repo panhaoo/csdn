@@ -101,7 +101,7 @@
 
             form.verify({
             comment: [ /[0-9]$/, '评论数只能输入数字'],
-            browse: [ /[0-9]$/, '浏览数只能输入数字'],
+            browse: [ /[0-9]$/, '浏览数只能输入数字']
             });
           //监听提交
           form.on('submit(add)', function(data){
@@ -113,7 +113,6 @@
                 success:function (data) {
                     if(data.code == 0){
                   layer.alert("增加成功", {icon: 6},function () {
-                      parent.location.reload();
                       // 获得frame索引
                       var index = parent.layer.getFrameIndex(window.name);
                       //关闭当前frame

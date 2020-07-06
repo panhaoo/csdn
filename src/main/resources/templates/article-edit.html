@@ -23,6 +23,15 @@
   <body>
   <div class="x-body layui-anim layui-anim-up">
       <form class="layui-form">
+
+
+          <div class="layui-form-item">
+              <div class="layui-input-inline">
+                  <input  type="hidden" id="L_id" name="id" required=""
+                          autocomplete="off" class="layui-input" th:value="${article.id}">
+                  <!--                th:value="${user.id}" 回填数据-->
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_title" class="layui-form-label">标题
               </label>
