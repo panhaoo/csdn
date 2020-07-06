@@ -79,6 +79,14 @@ public class UserController {
         return mv;
     }
 
+    @RequestMapping("/toWelcome")
+    public ModelAndView toWelcome(){
+        System.out.println("加载欢迎界面");
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("user-welcome");
+        return mv;
+    }
+
     /**
      * 进入用户列表
      */
@@ -253,6 +261,31 @@ public class UserController {
                 e.printStackTrace();
             }
         }
+        return result;
+    }
+
+    @RequestMapping("/searchByUname/{seachUname}")
+    //Restful路径传参(id)模式
+    public Result searchByUname(@PathVariable String seachUname){
+        Result result = null;
+        List<User> list = userService.searchByUname(seachUname);
+        result = ResultUtils.success(list);
+        result.setData(list);
+        result.setCode(0);
+        result.setMsg("查询成功");
+        result.setCount(list.size());
+        return result;
+    }
+
+    @RequestMapping("/searchByDate/{dates}")
+    public Result searchByDate(@PathVariable List<String> dates){
+        Result result = null;
+        List<User> list = userService.searchByDate(dates);
+        result = ResultUtils.success(list);
+        result.setData(list);
+        result.setCode(0);
+        result.setMsg("查询成功");
+        result.setCount(list.size());
         return result;
     }
 

@@ -13,4 +13,6 @@ public interface IUserService {
     public int updateById(User user);
     public int deleteById(Integer id);
     public int deleteBatchIds(List<Integer> list);
+    public List<User> searchByUname(String searchUname);
+    public List<User> searchByDate(List<String> list);
 }
